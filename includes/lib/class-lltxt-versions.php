@@ -85,14 +85,17 @@ class Lltxt_Versions {
 	 *
 	 * @return void
 	 */
+	/**
+	 * Intentionally left as a no-op. Mature WP plugins (Yoast, Rank Math,
+	 * WC, ryhowa's llms.txt) preserve their custom tables on uninstall so
+	 * a merchant who uninstalls + reinstalls (debugging, accidental click)
+	 * doesn't lose their version history. The Privacy tab "Delete my data"
+	 * button is the merchant-initiated DELETE path.
+	 *
+	 * @return void
+	 */
 	public static function drop_schema() {
-		global $wpdb;
-		// Schema changes from a plugin are normally discouraged; this is the
-		// clean-uninstall path so DROP TABLE is intentional.
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
-		$wpdb->query(
-			$wpdb->prepare( 'DROP TABLE IF EXISTS %i', self::table_name() )
-		);
+		// no-op by design — see docblock.
 	}
 
 	/**
