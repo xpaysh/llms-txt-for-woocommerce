@@ -87,7 +87,9 @@ class Lltxt_Versions {
 	 */
 	public static function drop_schema() {
 		global $wpdb;
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		// Schema changes from a plugin are normally discouraged; this is the
+		// clean-uninstall path so DROP TABLE is intentional.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
 		$wpdb->query(
 			$wpdb->prepare( 'DROP TABLE IF EXISTS %i', self::table_name() )
 		);
