@@ -82,7 +82,7 @@ final class Lltxt_Plugin {
 		echo wp_kses_post(
 			sprintf(
 				/* translators: %s: settings URL. */
-				__( '<strong>LLMs.txt for WooCommerce</strong> keeps a version history of your /llms.txt and /llms-full.txt at xpay.sh so you can roll back if needed. Turn it off in <a href="%s">Settings → LLMs.txt → Privacy</a>.', 'llms-txt-for-woocommerce' ),
+				__( '<strong>LLMs.txt for WooCommerce</strong> keeps a version history of your /llms.txt and /llms-full.txt so you can roll back if needed. Turn it off in <a href="%s">Settings → LLMs.txt → Privacy</a>.', 'llms-txt-for-woocommerce' ),
 				esc_url( $settings_url )
 			)
 		);
@@ -220,13 +220,23 @@ final class Lltxt_Plugin {
 		}
 
 		// First-activation pass: back up any pre-existing emitted files in the
-		// webroot so we never silently clobber a merchant's hand-authored file.
+		// webroot, then snapshot the merchant's original to the version-history
+		// backend with source=merchant-pre-existing so it appears in the
+		// Version Control tab alongside future plugin-generated versions.
+		require_once LLTXT_DIR . 'includes/lib/class-lltxt-snapshot.php';
 		$found = array();
 		foreach ( array_values( Lltxt_Router::routes() ) as $rel ) {
 			$full = Lltxt_Cache::get_path( $rel );
-			if ( file_exists( $full ) ) {
-				if ( Lltxt_Cache::backup_existing( $rel ) ) {
-					$found[] = $rel;
+			if ( ! file_exists( $full ) ) {
+				continue;
+			}
+			// Capture body BEFORE backup_existing flips the route to plugin-managed.
+			// phpcs:ignore WordPress.WP.AlternativeFunctions
+			$existing_body = @file_get_contents( $full );
+			if ( Lltxt_Cache::backup_existing( $rel ) ) {
+				$found[] = $rel;
+				if ( is_string( $existing_body ) && '' !== $existing_body ) {
+					Lltxt_Snapshot::post_snapshot( $rel, $existing_body, 'merchant-pre-existing' );
 				}
 			}
 		}

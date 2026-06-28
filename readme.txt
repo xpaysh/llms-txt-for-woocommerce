@@ -1,4 +1,4 @@
-=== LLMs.txt for WooCommerce — Get Your Products into ChatGPT, Claude & Perplexity ===
+=== LLMs.txt for WooCommerce ===
 Contributors: xpay
 Tags: llms.txt, woocommerce, chatgpt, ai search, generative engine optimization
 Requires at least: 6.0

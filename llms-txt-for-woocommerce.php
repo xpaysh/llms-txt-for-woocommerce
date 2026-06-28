@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       LLMs.txt for WooCommerce — Get Your Products into ChatGPT, Claude & Perplexity
+ * Plugin Name:       LLMs.txt for WooCommerce
  * Plugin URI:        https://xpay.sh
  * Description:       Will ChatGPT recommend your WooCommerce store? This plugin makes it happen. Generates /llms.txt and /llms-full.txt from your live catalog so AI shopping agents find your products. Free forever.
  * Version:           1.0.0

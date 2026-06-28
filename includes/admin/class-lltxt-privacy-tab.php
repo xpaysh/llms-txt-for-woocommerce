@@ -83,7 +83,7 @@ class Lltxt_Privacy_Tab {
 				<p><strong><?php esc_html_e( 'Not sent:', 'llms-txt-for-woocommerce' ); ?></strong>
 					<?php esc_html_e( 'No order data, no customer data, no admin credentials, no analytics, no IP logging beyond standard HTTP.', 'llms-txt-for-woocommerce' ); ?></p>
 				<p>
-					<a href="https://xpay.sh/privacy" target="_blank" rel="noopener"><?php esc_html_e( 'xpay.sh privacy policy →', 'llms-txt-for-woocommerce' ); ?></a>
+					<a href="https://xpay.sh/privacy" target="_blank" rel="noopener"><?php esc_html_e( 'Privacy policy →', 'llms-txt-for-woocommerce' ); ?></a>
 				</p>
 			</div>
 			<p><button type="submit" class="button button-primary"><?php esc_html_e( 'Save', 'llms-txt-for-woocommerce' ); ?></button></p>
@@ -130,7 +130,7 @@ class Lltxt_Privacy_Tab {
 		<hr />
 
 		<h3><?php esc_html_e( 'Delete my version data', 'llms-txt-for-woocommerce' ); ?></h3>
-		<p class="description"><?php esc_html_e( 'Removes every version we have stored for your site, then turns sync off.', 'llms-txt-for-woocommerce' ); ?></p>
+		<p class="description"><?php esc_html_e( 'This removes all the saved versions and turns sync off.', 'llms-txt-for-woocommerce' ); ?></p>
 		<form method="post">
 			<?php wp_nonce_field( 'lltxt_privacy' ); ?>
 			<input type="hidden" name="lltxt_privacy_action" value="delete_data" />
