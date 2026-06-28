@@ -202,8 +202,6 @@ class Lltxt_Files_Tab {
 										</button>
 									</form>
 								<?php endif; ?>
-							<?php else : ?>
-								<span class="description"><?php esc_html_e( 'Configured in the AI Bots tab', 'llms-txt-for-woocommerce' ); ?></span>
 							<?php endif; ?>
 						</td>
 					</tr>

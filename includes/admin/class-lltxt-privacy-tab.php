@@ -33,6 +33,18 @@ class Lltxt_Privacy_Tab {
 			$enabled = isset( $_POST['lltxt_phone_home'] ) ? 1 : 0;
 			update_option( Lltxt_Snapshot::OPT_PHONE_HOME, $enabled, false );
 			$notice = $enabled ? 'priv_enabled' : 'priv_disabled';
+		} elseif ( 'reset_connection' === $action ) {
+			Lltxt_Snapshot::reset_connection();
+			// Re-baseline: post the currently-served bodies under the new key
+			// so the merchant immediately sees their files in the version
+			// history. Best-effort — non-blocking.
+			foreach ( array_values( Lltxt_Router::routes() ) as $rel ) {
+				$body = Lltxt_Cache::read( $rel );
+				if ( is_string( $body ) && '' !== $body ) {
+					Lltxt_Snapshot::post_snapshot( $rel, $body, 'plugin-generated', false );
+				}
+			}
+			$notice = 'priv_reset_ok';
 		} elseif ( 'delete_data' === $action ) {
 			// Fire delete first WHILE phone-home is still enabled.
 			$was_enabled = Lltxt_Snapshot::is_enabled();
@@ -55,6 +67,7 @@ class Lltxt_Privacy_Tab {
 	 */
 	public static function render() {
 		self::notice();
+		self::render_mismatch_notice();
 		$enabled  = Lltxt_Snapshot::is_enabled();
 		$slug     = Lltxt_Snapshot::slug();
 		$hash     = Lltxt_Snapshot::api_key_hash();
@@ -157,6 +170,7 @@ class Lltxt_Privacy_Tab {
 			'priv_disabled'   => array( 'success', __( 'Version history sync is off. Nothing will be sent.', 'llms-txt-for-woocommerce' ) ),
 			'priv_deleted'    => array( 'success', __( 'Your version data was deleted and sync is now off.', 'llms-txt-for-woocommerce' ) ),
 			'priv_delete_err' => array( 'error',   __( 'Could not delete your version data — try again, or contact support.', 'llms-txt-for-woocommerce' ) ),
+			'priv_reset_ok'   => array( 'success', __( 'Connection reset. A new api_key was generated and your current files were re-baselined.', 'llms-txt-for-woocommerce' ) ),
 		);
 		if ( ! isset( $map[ $code ] ) ) {
 			return;
@@ -166,5 +180,37 @@ class Lltxt_Privacy_Tab {
 			esc_attr( $map[ $code ][0] ),
 			esc_html( $map[ $code ][1] )
 		);
+	}
+
+	/**
+	 * "This site was reinstalled or moved" notice + Reset connection button,
+	 * shown when the backend has recently rejected our api_key. Public so the
+	 * Version Control tab can render the same surface above its table.
+	 *
+	 * @return void
+	 */
+	public static function render_mismatch_notice() {
+		if ( ! Lltxt_Snapshot::has_key_mismatch() ) {
+			return;
+		}
+		// Always post to the Privacy tab handler so the same notice works
+		// from either Privacy or Version Control tabs.
+		$action_url = admin_url( 'options-general.php?page=' . Lltxt_Admin_Page::SLUG . '&tab=privacy' );
+		?>
+		<div class="notice notice-warning">
+			<p>
+				<strong><?php esc_html_e( 'Version history sync is failing.', 'llms-txt-for-woocommerce' ); ?></strong>
+				<?php esc_html_e( 'This usually means the site was reinstalled or moved (the api_key on file no longer matches). Click Reset connection to start fresh — a new key is generated locally and your current files are re-baselined.', 'llms-txt-for-woocommerce' ); ?>
+			</p>
+			<form method="post" action="<?php echo esc_url( $action_url ); ?>" style="margin-bottom:8px;">
+				<?php wp_nonce_field( 'lltxt_privacy' ); ?>
+				<input type="hidden" name="lltxt_privacy_action" value="reset_connection" />
+				<button type="submit" class="button button-primary"
+					onclick="return confirm('<?php echo esc_js( __( 'Reset the connection? A new api_key is generated and your current files become the new baseline.', 'llms-txt-for-woocommerce' ) ); ?>');">
+					<?php esc_html_e( 'Reset connection', 'llms-txt-for-woocommerce' ); ?>
+				</button>
+			</form>
+		</div>
+		<?php
 	}
 }

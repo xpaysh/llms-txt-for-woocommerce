@@ -28,6 +28,14 @@ class Lltxt_Snapshot {
 	const OPT_LAST_SNAPSHOT_TS = 'lltxt_last_snapshot_ts';
 
 	/**
+	 * Transient flag set when the backend rejects our api_key as belonging to
+	 * a different site (reinstall after uninstall; production -> staging
+	 * clone; site moved hosts). The admin UI surfaces a "Reset connection"
+	 * prompt while this flag is present.
+	 */
+	const TRANSIENT_KEY_MISMATCH = 'lltxt_api_key_mismatch';
+
+	/**
 	 * Default production base URL. Override via the `lltxt_backend_base_url`
 	 * filter or the `lltxt_backend_base_url` wp_option for self-hosted or
 	 * dev backends.
@@ -316,12 +324,46 @@ class Lltxt_Snapshot {
 		$body = wp_remote_retrieve_body( $res );
 		$json = json_decode( $body, true );
 		if ( $code >= 200 && $code < 300 ) {
+			// Successful round-trip — clear any stale mismatch flag.
+			delete_transient( self::TRANSIENT_KEY_MISMATCH );
 			return is_array( $json ) ? $json : array();
+		}
+		$err = is_array( $json ) && isset( $json['error'] ) ? (string) $json['error'] : 'HTTP ' . $code;
+		// Surface api_key_mismatch in a way the admin UI can detect (it shows
+		// the "Reset connection" notice in the Privacy + Version Control tabs).
+		if ( 403 === $code || 'api_key_mismatch' === $err ) {
+			set_transient( self::TRANSIENT_KEY_MISMATCH, 1, DAY_IN_SECONDS );
 		}
 		return new WP_Error(
 			'lltxt_http_' . $code,
-			is_array( $json ) && isset( $json['error'] ) ? (string) $json['error'] : 'HTTP ' . $code,
+			$err,
 			$json
 		);
+	}
+
+	/**
+	 * True when the backend recently rejected our api_key as belonging to a
+	 * different site (production -> staging clone, reinstall after uninstall).
+	 *
+	 * @return bool
+	 */
+	public static function has_key_mismatch() {
+		return (bool) get_transient( self::TRANSIENT_KEY_MISMATCH );
+	}
+
+	/**
+	 * Reset the local connection — rotate api_key, drop the initial-backups
+	 * ledger, clear the mismatch flag. Called from the Privacy tab's "Reset
+	 * connection" handler. The orphan row on the backend ages out via TTL.
+	 *
+	 * @return void
+	 */
+	public static function reset_connection() {
+		delete_option( self::OPT_API_KEY );
+		delete_option( 'lltxt_initial_backups' );
+		delete_transient( self::TRANSIENT_KEY_MISMATCH );
+		// Re-seed a fresh key immediately so the next request uses the new
+		// hash. api_key_hash() bootstraps on read.
+		self::api_key_hash();
 	}
 }

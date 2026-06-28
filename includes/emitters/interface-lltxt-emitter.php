@@ -1,7 +1,7 @@
 <?php
 /**
- * Emitter contract. Every emitted file (and the two hook-only emitters)
- * implements this so the refresh + router + admin code can treat them uniformly.
+ * Emitter contract. Every emitted file implements this so the refresh + router
+ * + admin code can treat them uniformly.
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
@@ -23,8 +23,8 @@ interface Lltxt_Emitter_Interface {
 	public function render();
 
 	/**
-	 * Relative output path from the webroot (e.g. 'llms.txt'). Returns null for
-	 * hook-only emitters (robots.txt, head discovery) that write no static file.
+	 * Relative output path from the webroot (e.g. 'llms.txt'). May return null
+	 * for a future emitter that writes no static file.
 	 *
 	 * @return string|null
 	 */
@@ -39,7 +39,7 @@ interface Lltxt_Emitter_Interface {
 
 	/**
 	 * Regex route pattern for add_rewrite_rule (without anchors). Empty string
-	 * for hook-only emitters.
+	 * if this emitter is not directly routable.
 	 *
 	 * @return string
 	 */

@@ -113,6 +113,9 @@ class Lltxt_Version_Control_Tab {
 	 */
 	public static function render() {
 		self::notice();
+		if ( class_exists( 'Lltxt_Privacy_Tab' ) ) {
+			Lltxt_Privacy_Tab::render_mismatch_notice();
+		}
 
 		$enabled = Lltxt_Snapshot::is_enabled();
 		$route   = isset( $_GET['route'] ) ? sanitize_text_field( wp_unslash( $_GET['route'] ) ) : 'llms.txt'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -251,7 +254,7 @@ class Lltxt_Version_Control_Tab {
 					<td><?php echo esc_html( $source ); ?></td>
 					<td><?php echo esc_html( (string) $bytes ); ?></td>
 					<td><code><?php echo esc_html( $sha ); ?></code></td>
-					<td><?php echo $pinned ? '📌 ' . esc_html__( 'Pinned — refresh paused for this route', 'llms-txt-for-woocommerce' ) : ''; ?></td>
+					<td><?php if ( $pinned ) { echo '📌 ' . esc_html__( 'Pinned — refresh paused for this route', 'llms-txt-for-woocommerce' ); } ?></td>
 					<td>
 						<form method="post" style="display:inline;">
 							<?php wp_nonce_field( 'lltxt_vc' ); ?>

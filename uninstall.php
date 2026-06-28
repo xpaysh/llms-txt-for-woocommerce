@@ -18,8 +18,10 @@ $lltxt_phone_home = (int) get_option( 'lltxt_phone_home', 1 );
 $lltxt_api_key    = (string) get_option( 'lltxt_api_key', '' );
 $lltxt_base_url   = (string) get_option(
 	'lltxt_backend_base_url',
-	'https://8mf8prh9rg.execute-api.us-east-1.amazonaws.com'
+	'https://llmstxt-api.xpay.sh'
 );
+/** Honour the `lltxt_backend_base_url` filter so self-hosted backends are reached at uninstall too. */
+$lltxt_base_url   = (string) apply_filters( 'lltxt_backend_base_url', $lltxt_base_url );
 $lltxt_host       = wp_parse_url( home_url(), PHP_URL_HOST );
 $lltxt_slug       = is_string( $lltxt_host ) ? strtolower( str_replace( '.', '-', $lltxt_host ) ) : '';
 

@@ -338,9 +338,11 @@ class Lltxt_Cache {
 			}
 			// phpcs:ignore WordPress.WP.AlternativeFunctions
 			@unlink( $tmp );
-			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-			error_log( '[lltxt] fast-path rename failed for ' . $full . ', falling back to WP_Filesystem' );
-		} else {
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				error_log( '[lltxt] fast-path rename failed for ' . $full . ', falling back to WP_Filesystem' );
+			}
+		} elseif ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			error_log( '[lltxt] file_put_contents failed for ' . $tmp . ', falling back to WP_Filesystem' );
 		}
@@ -355,8 +357,10 @@ class Lltxt_Cache {
 				return strlen( $content );
 			}
 		}
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-		error_log( '[lltxt] WP_Filesystem write failed for ' . $full . ', falling back to fopen' );
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log( '[lltxt] WP_Filesystem write failed for ' . $full . ', falling back to fopen' );
+		}
 
 		// 3. fopen stream fallback (some hosts block file_put_contents but allow streams).
 		$tmp2 = $full . '.tmp-' . wp_generate_password( 8, false );

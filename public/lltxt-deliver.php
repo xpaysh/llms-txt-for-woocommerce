@@ -1,8 +1,9 @@
 <?php
 /**
- * Rewrite target for all 13 routes. Reads the lltxt_route query var, maps it to
- * a static file, and serves it with the correct Content-Type. Falls back to a
- * live dynamic render if the static file is missing (hardened/read-only hosts).
+ * Rewrite target for all plugin routes. Reads the lltxt_route query var, maps
+ * it to a static file, and serves it with the correct Content-Type. Falls back
+ * to a live dynamic render if the static file is missing (hardened/read-only
+ * hosts).
  *
  * Included (and exited) from Lltxt_Router::maybe_deliver().
  *

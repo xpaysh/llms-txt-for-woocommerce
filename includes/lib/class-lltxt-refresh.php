@@ -37,6 +37,19 @@ class Lltxt_Refresh {
 	const STALE_SECONDS = 172800;
 
 	/**
+	 * Transient key used as a mutex so two refreshes can't run concurrently
+	 * (cron + admin "Sync now" overlap, double emitter cost, duplicate
+	 * snapshot POSTs to xpay.sh).
+	 */
+	const LOCK_KEY = 'lltxt_refresh_lock';
+
+	/**
+	 * Max lock TTL (seconds). Long enough for a slow store full refresh,
+	 * short enough that a dead-locked refresh self-clears.
+	 */
+	const LOCK_TTL = 120;
+
+	/**
 	 * Register hooks.
 	 *
 	 * @return void
@@ -71,6 +84,17 @@ class Lltxt_Refresh {
 	 * @return array{ok:int,fail:int,errors:array<string,string>}
 	 */
 	public static function run( $only = null ) {
+		// Concurrent-run guard. get_transient() returns false when no lock is
+		// set, so the conditional handles "no lock" + "expired" identically.
+		if ( false !== get_transient( self::LOCK_KEY ) ) {
+			return array(
+				'ok'     => 0,
+				'fail'   => 0,
+				'errors' => array( '_lock' => 'Another refresh is already running.' ),
+			);
+		}
+		set_transient( self::LOCK_KEY, time(), self::LOCK_TTL );
+
 		$started = microtime( true );
 		$classes = is_array( $only ) ? $only : Lltxt_Plugin::emitter_classes();
 		$ok      = 0;
@@ -86,7 +110,8 @@ class Lltxt_Refresh {
 				continue;
 			}
 			$path = $emitter->output_path();
-			// Hook-only emitters (robots.txt, head discovery) have no static file.
+			// Defensive: skip an emitter that reports no output path (no current
+			// emitter does, but third-party emitters added via filters might).
 			if ( null === $path || '' === $path ) {
 				continue;
 			}
@@ -142,6 +167,8 @@ class Lltxt_Refresh {
 				'partial'  => ( null !== $only ),
 			)
 		);
+
+		delete_transient( self::LOCK_KEY );
 
 		return array(
 			'ok'     => $ok,

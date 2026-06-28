@@ -54,20 +54,52 @@ class Lltxt_Emit_Llms_Txt implements Lltxt_Emitter_Interface {
 		$out[] = '> Base: ' . $base;
 		$out[] = '';
 
-		// Discovery links — every common catalog convention, same-origin.
+		// Discovery links. Only link files this plugin guarantees + WC-native
+		// endpoints. Companion files (catalog.json, sitemap-ai.xml,
+		// .well-known/agent-card.json, etc.) only appear if a separate plugin
+		// emits them — detected via file_exists() on the merchant webroot, or
+		// added through the `lltxt_extra_discovery_links` filter so a sister
+		// plugin can register itself.
 		$out[] = '## Catalog & discovery';
 		$out[] = '';
-		$out[] = '- Full product catalog (ACP JSON): ' . $base . '/catalog.json';
-		$out[] = '- Full product catalog (products.json): ' . $base . '/products.json';
 		$out[] = '- Full catalog feed (one fetch): ' . $base . '/llms-full.txt';
 		$out[] = '- WooCommerce Store API: ' . $base . '/wp-json/wc/store/v1/products';
-		$out[] = '- Google Shopping feed: ' . $base . '/feed/google-shopping.xml';
-		$out[] = '- Sitemap (AI): ' . $base . '/sitemap-ai.xml';
 		$out[] = '- Human storefront: ' . $base . '/shop';
-		$out[] = '- UCP business profile: ' . $base . '/.well-known/ucp';
-		$out[] = '- MCP descriptor: ' . $base . '/.well-known/mcp.json';
-		$out[] = '- Agent card (A2A): ' . $base . '/.well-known/agent-card.json';
-		$out[] = '- Human-readable index: ' . $base . '/index.md';
+
+		$companions = array(
+			'catalog.json'                  => 'Full product catalog (ACP JSON)',
+			'products.json'                 => 'Full product catalog (products.json)',
+			'feed/google-shopping.xml'      => 'Google Shopping feed',
+			'sitemap-ai.xml'                => 'Sitemap (AI)',
+			'.well-known/ucp'               => 'UCP business profile',
+			'.well-known/mcp.json'          => 'MCP descriptor',
+			'.well-known/agent-card.json'   => 'Agent card (A2A)',
+			'index.md'                      => 'Human-readable index',
+		);
+		foreach ( $companions as $rel => $label ) {
+			$path = Lltxt_Cache::get_path( $rel );
+			if ( file_exists( $path ) ) {
+				$out[] = '- ' . $label . ': ' . $base . '/' . $rel;
+			}
+		}
+
+		/**
+		 * Filter extra discovery links surfaced from /llms.txt. Sister plugins
+		 * (e.g. a separate sitemap-ai or UCP emitter) can advertise themselves
+		 * without forking this plugin.
+		 *
+		 * @param array  $extra Map of relative path => label.
+		 * @param string $base  Base URL.
+		 */
+		$extra = (array) apply_filters( 'lltxt_extra_discovery_links', array(), $base );
+		foreach ( $extra as $rel => $label ) {
+			$rel   = ltrim( (string) $rel, '/' );
+			$label = (string) $label;
+			if ( '' === $rel || '' === $label ) {
+				continue;
+			}
+			$out[] = '- ' . $label . ': ' . $base . '/' . $rel;
+		}
 		$out[] = '';
 
 		// AI shopping assistant instructions (replicated verbatim in /index.md).
