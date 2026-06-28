@@ -37,7 +37,7 @@ This plugin reads your live WooCommerce catalog and emits exactly what AI shoppe
 * **WooCommerce visibility honoured** — hidden, shop-only and search-only products stay out by default
 * **A per-product *Exclude from llms.txt* checkbox** on every product edit screen, in case you want to keep a specific item private
 * **Smart description fallback** — pulls from Yoast SEO, Rank Math, AIOSEO, SEOPress or Slim SEO if you've already written one; falls back to your WooCommerce short description otherwise
-* **Won't overwrite an existing `/llms.txt`** — if you already have one (from another plugin or hand-rolled), we back it up and leave it alone until you choose to take over
+* **Safe take-over of an existing `/llms.txt`** — if you already have one (from another plugin or hand-rolled), we back it up to `wp-content/uploads/lltxt-backups/` first, then take over. Restore your version any time from the Files tab — the backup is always preserved
 
 = Built by the team behind Agentic Commerce for WooCommerce =
 
@@ -76,9 +76,9 @@ That's it. Settings live at **Settings → LLMs.txt** if you want to tune which 
 
 `/llms.txt` is the file AI shopping agents look for when they want to recommend products. Without one, you're invisible to them. With one — and especially a commerce-aware one — you join the answer set. The rest is up to your product quality, your prices and the AI's match logic, but at least you're in the running. You can't win the race if you don't show up.
 
-= I already have a /llms.txt — will this overwrite it? =
+= I already have a /llms.txt — what happens to it? =
 
-No. On activation the plugin detects your existing file, backs it up to `wp-content/uploads/lltxt-backups/`, and **leaves your version in place**. It's marked *merchant-managed* in the Files tab until you decide to switch it to plugin-managed.
+Your file is preserved. On activation the plugin **copies it to `wp-content/uploads/lltxt-backups/<file>-<date>.bak`** (with a timestamped name, so subsequent activations never overwrite the backup), then takes over `/llms.txt` so your products are immediately AI-ready. **Restore your original any time** with one click from the Files tab → *Restore my version*. The backup never gets deleted, even on plugin uninstall — your file is yours.
 
 = Does it slow my store down? =
 

@@ -51,9 +51,11 @@ class Lltxt_Admin_Page {
 	 * @return void
 	 */
 	public static function menu() {
+		// Use the full "LLMs.txt for WooCommerce" label so the Settings submenu
+		// stays distinguishable if a generic LLMs.txt plugin is also active.
 		add_options_page(
 			__( 'LLMs.txt for WooCommerce', 'llms-txt-for-woocommerce' ),
-			__( 'LLMs.txt', 'llms-txt-for-woocommerce' ),
+			__( 'LLMs.txt for WooCommerce', 'llms-txt-for-woocommerce' ),
 			'manage_options',
 			self::SLUG,
 			array( __CLASS__, 'render' )

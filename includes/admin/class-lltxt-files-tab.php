@@ -47,6 +47,15 @@ class Lltxt_Files_Tab {
 			} else {
 				$notice = 'regen_one_err';
 			}
+		} elseif ( 'restore_backup' === $action ) {
+			$path  = isset( $_POST['lltxt_path'] ) ? sanitize_text_field( wp_unslash( $_POST['lltxt_path'] ) ) : '';
+			$valid = in_array( $path, array_values( Lltxt_Router::routes() ), true );
+			if ( $valid ) {
+				$res    = Lltxt_Cache::restore_initial_backup( $path );
+				$notice = is_wp_error( $res ) ? 'restore_err' : 'restore_ok';
+			} else {
+				$notice = 'restore_err';
+			}
 		} else {
 			$notice = '';
 		}
@@ -179,6 +188,20 @@ class Lltxt_Files_Tab {
 										</button>
 									</form>
 								<?php endif; ?>
+								<?php
+								$backups = Lltxt_Cache::initial_backups();
+								if ( isset( $backups[ $path ] ) ) :
+								?>
+									<form method="post" style="display:inline;">
+										<?php wp_nonce_field( 'lltxt_files' ); ?>
+										<input type="hidden" name="lltxt_files_action" value="restore_backup" />
+										<input type="hidden" name="lltxt_path" value="<?php echo esc_attr( $path ); ?>" />
+										<button type="submit" class="button button-small"
+											onclick="return confirm('<?php echo esc_js( __( 'Restore your original file (the one in your webroot before this plugin was activated)? The plugin will stop refreshing this route until you flip it back.', 'llms-txt-for-woocommerce' ) ); ?>');">
+											<?php esc_html_e( 'Restore my version', 'llms-txt-for-woocommerce' ); ?>
+										</button>
+									</form>
+								<?php endif; ?>
 							<?php else : ?>
 								<span class="description"><?php esc_html_e( 'Configured in the AI Bots tab', 'llms-txt-for-woocommerce' ); ?></span>
 							<?php endif; ?>
@@ -231,6 +254,8 @@ class Lltxt_Files_Tab {
 			'regen_one_ok'  => array( 'success', __( 'File regenerated.', 'llms-txt-for-woocommerce' ) ),
 			'regen_one_err' => array( 'error', __( 'Could not regenerate that file — see Diagnostics.', 'llms-txt-for-woocommerce' ) ),
 			'take_over_ok'  => array( 'success', __( 'File flagged plugin-managed. The next refresh will overwrite the on-disk copy.', 'llms-txt-for-woocommerce' ) ),
+			'restore_ok'    => array( 'success', __( 'Your original file is back in place. The plugin will not refresh this route until you flip it back to plugin-managed.', 'llms-txt-for-woocommerce' ) ),
+			'restore_err'   => array( 'error',   __( 'Could not restore the backup — see the Diagnostics tab for details.', 'llms-txt-for-woocommerce' ) ),
 		);
 		if ( ! isset( $map[ $code ] ) ) {
 			return;

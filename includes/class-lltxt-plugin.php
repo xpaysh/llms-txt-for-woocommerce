@@ -91,7 +91,7 @@ final class Lltxt_Plugin {
 			echo esc_html(
 				sprintf(
 					/* translators: %d: number of files. */
-					_n( 'Found %d existing file in your webroot. Backed up to /wp-content/uploads/lltxt-backups/ — we won\'t overwrite it.', 'Found %d existing files in your webroot. Backed up to /wp-content/uploads/lltxt-backups/ — we won\'t overwrite them.', count( $found ), 'llms-txt-for-woocommerce' ),
+					_n( 'Found %d existing file in your webroot — backed up to /wp-content/uploads/lltxt-backups/, the plugin is now managing it. Restore your version any time from the Files tab.', 'Found %d existing files in your webroot — backed up to /wp-content/uploads/lltxt-backups/, the plugin is now managing them. Restore your versions any time from the Files tab.', count( $found ), 'llms-txt-for-woocommerce' ),
 					count( $found )
 				)
 			);

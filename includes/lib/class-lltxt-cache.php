@@ -205,6 +205,48 @@ class Lltxt_Cache {
 			return false;
 		}
 		self::record_initial_backup( $relative_path, $backup_path, $sha );
+		// Default: back up and TAKE OVER. Merchants who installed an llms.txt
+		// plugin overwhelmingly want it to manage their llms.txt. The original
+		// file is preserved on disk; the Files tab exposes a "Restore my
+		// version" action that flips the route back to merchant-managed.
+		self::set_mode( $relative_path, self::MODE_PLUGIN );
+		return true;
+	}
+
+	/**
+	 * Restore a previously-backed-up merchant file from
+	 * wp-content/uploads/lltxt-backups/, write it back to the webroot, and
+	 * flag the route merchant-managed so future refreshes skip it.
+	 *
+	 * @param string $relative_path Route relative path (e.g. "llms.txt").
+	 * @return true|WP_Error
+	 */
+	public static function restore_initial_backup( $relative_path ) {
+		$relative_path = ltrim( $relative_path, '/' );
+		$existing      = self::initial_backups();
+		if ( ! isset( $existing[ $relative_path ] ) ) {
+			return new WP_Error( 'lltxt_no_backup', 'No backup recorded for ' . $relative_path );
+		}
+		$backup_path = (string) ( $existing[ $relative_path ]['backup_path'] ?? '' );
+		if ( '' === $backup_path || ! file_exists( $backup_path ) ) {
+			return new WP_Error( 'lltxt_backup_missing', 'Backup file not found on disk: ' . $backup_path );
+		}
+		// phpcs:ignore WordPress.WP.AlternativeFunctions
+		$body = @file_get_contents( $backup_path );
+		if ( false === $body ) {
+			return new WP_Error( 'lltxt_backup_unreadable', 'Backup file unreadable: ' . $backup_path );
+		}
+		// Force-write the merchant's body to the webroot, bypassing mode checks.
+		$full = self::get_path( $relative_path );
+		$dir  = dirname( $full );
+		if ( ! wp_mkdir_p( $dir ) ) {
+			return new WP_Error( 'lltxt_mkdir', 'Could not create directory: ' . $dir );
+		}
+		$res = self::write_with_fallbacks( $full, $body );
+		if ( is_wp_error( $res ) ) {
+			return $res;
+		}
+		self::record_timestamp( $relative_path, time(), strlen( $body ) );
 		self::set_mode( $relative_path, self::MODE_MERCHANT );
 		return true;
 	}
