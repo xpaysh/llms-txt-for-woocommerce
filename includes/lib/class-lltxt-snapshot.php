@@ -28,10 +28,11 @@ class Lltxt_Snapshot {
 	const OPT_LAST_SNAPSHOT_TS = 'lltxt_last_snapshot_ts';
 
 	/**
-	 * Default dev base URL — replace via the `lltxt_backend_base_url` filter
-	 * or the `lltxt_backend_base_url` wp_option for production swaps.
+	 * Default production base URL. Override via the `lltxt_backend_base_url`
+	 * filter or the `lltxt_backend_base_url` wp_option for self-hosted or
+	 * dev backends.
 	 */
-	const DEFAULT_BASE_URL = 'https://8mf8prh9rg.execute-api.us-east-1.amazonaws.com';
+	const DEFAULT_BASE_URL = 'https://llmstxt-api.xpay.sh';
 
 	/**
 	 * Phone-home master toggle.

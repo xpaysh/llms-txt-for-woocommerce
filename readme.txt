@@ -2,7 +2,7 @@
 Contributors: xpay
 Tags: llms.txt, woocommerce, chatgpt, ai search, generative engine optimization
 Requires at least: 6.0
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later
@@ -48,7 +48,7 @@ The team behind this plugin runs AI-shopping infrastructure across thousands of 
 This plugin keeps a version history of your `/llms.txt` and `/llms-full.txt` at xpay.sh so you can compare versions and roll back to any prior one with a single click. This is **on by default** and disclosed in a dismissible admin notice on activation. Turn it off any time in **Settings → LLMs.txt → Privacy**.
 
 **Service:** xpay.sh LLMs.txt version-history API
-**Base URL:** `https://8mf8prh9rg.execute-api.us-east-1.amazonaws.com` (filterable via the `lltxt_backend_base_url` filter or option)
+**Base URL:** `https://llmstxt-api.xpay.sh` (filterable via the `lltxt_backend_base_url` filter or option)
 **Privacy policy:** https://xpay.sh/privacy
 **Terms of service:** https://xpay.sh/terms
 

@@ -69,7 +69,7 @@ class Lltxt_Privacy_Tab {
 			<p>
 				<label>
 					<input type="checkbox" name="lltxt_phone_home" value="1" <?php checked( $enabled, true ); ?> />
-					<?php esc_html_e( 'Sync /llms.txt and /llms-full.txt to xpay.sh so I can see version history and roll back.', 'llms-txt-for-woocommerce' ); ?>
+					<?php esc_html_e( 'Sync /llms.txt and /llms-full.txt so I can see version history and roll back.', 'llms-txt-for-woocommerce' ); ?>
 				</label>
 			</p>
 			<div class="card" style="max-width:none; padding:1em; margin-bottom:1em;">
@@ -129,7 +129,7 @@ class Lltxt_Privacy_Tab {
 
 		<hr />
 
-		<h3><?php esc_html_e( 'Delete my data from xpay.sh', 'llms-txt-for-woocommerce' ); ?></h3>
+		<h3><?php esc_html_e( 'Delete my version data', 'llms-txt-for-woocommerce' ); ?></h3>
 		<p class="description"><?php esc_html_e( 'Removes every version we have stored for your site, then turns sync off.', 'llms-txt-for-woocommerce' ); ?></p>
 		<form method="post">
 			<?php wp_nonce_field( 'lltxt_privacy' ); ?>
@@ -153,10 +153,10 @@ class Lltxt_Privacy_Tab {
 			return;
 		}
 		$map = array(
-			'priv_enabled'    => array( 'success', __( 'Phone-home enabled. Snapshots will sync to xpay.sh on every refresh.', 'llms-txt-for-woocommerce' ) ),
-			'priv_disabled'   => array( 'success', __( 'Phone-home disabled. Nothing will be sent to xpay.sh.', 'llms-txt-for-woocommerce' ) ),
-			'priv_deleted'    => array( 'success', __( 'Your data was deleted from xpay.sh and sync is now off.', 'llms-txt-for-woocommerce' ) ),
-			'priv_delete_err' => array( 'error',   __( 'Could not delete remote data — try again, or contact xpay.sh support.', 'llms-txt-for-woocommerce' ) ),
+			'priv_enabled'    => array( 'success', __( 'Version history sync is on. Snapshots will sync on every refresh.', 'llms-txt-for-woocommerce' ) ),
+			'priv_disabled'   => array( 'success', __( 'Version history sync is off. Nothing will be sent.', 'llms-txt-for-woocommerce' ) ),
+			'priv_deleted'    => array( 'success', __( 'Your version data was deleted and sync is now off.', 'llms-txt-for-woocommerce' ) ),
+			'priv_delete_err' => array( 'error',   __( 'Could not delete your version data — try again, or contact support.', 'llms-txt-for-woocommerce' ) ),
 		);
 		if ( ! isset( $map[ $code ] ) ) {
 			return;
