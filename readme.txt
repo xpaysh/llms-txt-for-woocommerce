@@ -45,6 +45,8 @@ This plugin reads your live WooCommerce catalog and emits exactly what AI shoppe
 
 We build AI-shopping infrastructure for WooCommerce stores. We see, every day, which catalogs AI shoppers pick up and which they skip. We built this so any WooCommerce store — yours included — gets the same treatment for free.
 
+**Open source.** Read the code, file an issue, send a PR: [github.com/xpaysh/llms-txt-for-woocommerce](https://github.com/xpaysh/llms-txt-for-woocommerce)
+
 **You can't win the race if you don't show up.**
 
 == External services ==
