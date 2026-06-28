@@ -77,7 +77,7 @@ class Lltxt_Privacy_Tab {
 				</label>
 			</p>
 			<p class="description">
-				<?php esc_html_e( 'A weekly heartbeat to xpay.sh: your site URL and slug, your WordPress / WooCommerce / plugin versions, and your active product count.', 'llms-txt-for-woocommerce' ); ?>
+				<?php esc_html_e( 'Your site URL and slug, your WordPress / WooCommerce / plugin versions, and your active product count are saved for diagnostics.', 'llms-txt-for-woocommerce' ); ?>
 				<a href="https://xpay.sh/privacy" target="_blank" rel="noopener"><?php esc_html_e( 'Privacy policy', 'llms-txt-for-woocommerce' ); ?></a>
 			</p>
 			<p>
