@@ -1,0 +1,467 @@
+# Copyright (C) 2026 xpay
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: LLMs.txt for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/llms-txt-for-woocommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-27T20:30:13+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: llms-txt-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: llms-txt-for-woocommerce.php
+#: includes/admin/class-lltxt-admin-page.php:54
+#: includes/admin/class-lltxt-admin-page.php:119
+msgid "LLMs.txt for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: llms-txt-for-woocommerce.php
+msgid "https://xpay.sh"
+msgstr ""
+
+#. Description of the plugin
+#: llms-txt-for-woocommerce.php
+msgid "Auto-generate llms.txt, catalog.json, agents.md and 10 more AI-discovery files for your WooCommerce store. Help ChatGPT, Claude, Perplexity and every AI shopping agent find, understand, and sell your products."
+msgstr ""
+
+#. Author of the plugin
+#: llms-txt-for-woocommerce.php
+msgid "xpay"
+msgstr ""
+
+#: includes/admin/class-lltxt-admin-page.php:55
+msgid "LLMs.txt"
+msgstr ""
+
+#: includes/admin/class-lltxt-admin-page.php:70
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/class-lltxt-admin-page.php:113
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: includes/admin/class-lltxt-admin-page.php:122
+msgid "WooCommerce is not active. The discovery files will be generated, but product data will be empty until WooCommerce is enabled."
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:51
+msgid "AI bot settings saved."
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:58
+msgid "ChatGPT shopping & browsing (recommended ON)."
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:59
+msgid "OpenAI search indexer (recommended ON)."
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:60
+msgid "Claude browsing on a user request (recommended ON)."
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:61
+msgid "Perplexity shopping & answers (recommended ON)."
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:62
+msgid "Google AI / non-search crawlers (recommended ON)."
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:63
+msgid "OpenAI MODEL-TRAINING crawler — not a shopping agent. Default OFF."
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:66
+msgid "Choose which AI crawlers may access your store. These rules are appended to your WordPress robots.txt. Existing rules you already set are never overwritten."
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:69
+msgid "A physical robots.txt file exists in your webroot — it overrides WordPress's dynamic robots.txt, so these toggles will not take effect until you remove it or merge the directives manually (see the preview below)."
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:82
+msgid "Allow"
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:91
+msgid "Save AI Bot Settings"
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:94
+msgid "robots.txt preview"
+msgstr ""
+
+#: includes/admin/class-lltxt-bots-tab.php:95
+msgid "These are the directives appended to your robots.txt:"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:65
+msgid "Catalog settings saved. Regenerate files from the Files tab to apply."
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:78
+msgid "Best selling (total sales)"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:79
+msgid "Newest first"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:80
+msgid "Title (A–Z)"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:81
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:74
+msgid "Price"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:89
+msgid "Products to surface (top N)"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:94
+msgid "How many products to pull for the sample tables and feeds (10–500). Default 100."
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:98
+msgid "Ordering"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:108
+msgid "Only include categories"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:117
+msgid "Leave empty to include all categories."
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:121
+msgid "Exclude categories"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:130
+msgid "Products in these categories are removed from the surfaced set."
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:136
+msgid "Save Catalog Settings"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:90
+msgid "File preview"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:99
+#: includes/admin/class-lltxt-files-tab.php:132
+msgid "Preview"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:113
+msgid "Not generated yet."
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:124
+msgid "Test as ChatGPT-User"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:125
+msgid "Fetch one of your discovery files from your own site using the ChatGPT-User user-agent, to confirm it is reachable and served with the right Content-Type."
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:134
+msgid "Run test"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:142
+msgid "Result"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:142
+msgid "Error"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:165
+msgid "Refresh log"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:167
+msgid "No refreshes recorded yet."
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:171
+msgid "When"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:172
+msgid "OK"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:173
+msgid "Failed"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:174
+msgid "Duration"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:175
+msgid "Errors"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:58
+msgid "These files are generated locally on your server and served from your domain. Daily refresh runs via WP-Cron; you can also regenerate on demand below."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:62
+msgid "Regenerate All"
+msgstr ""
+
+#. translators: %s: human-readable time difference.
+#: includes/admin/class-lltxt-files-tab.php:69
+#, php-format
+msgid "Last full refresh: %s ago"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:79
+msgid "File"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:80
+msgid "Path"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:81
+msgid "Last Generated"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:82
+msgid "Actions"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:110
+msgid "Served live (no static file)"
+msgstr ""
+
+#. translators: %s: time difference.
+#: includes/admin/class-lltxt-files-tab.php:115
+#, php-format
+msgid "%s ago"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:120
+msgid "Not generated yet"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:130
+msgid "Regenerate"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:134
+msgid "Configured in the AI Bots tab"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:186
+msgid "All files regenerated."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:187
+msgid "Files regenerated with some errors — see Diagnostics."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:188
+msgid "File regenerated."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:189
+msgid "Could not regenerate that file — see Diagnostics."
+msgstr ""
+
+#. translators: %s: store name.
+#: includes/emitters/class-lltxt-emit-agent-card.php:52
+#, php-format
+msgid "Agentic-commerce surface for %s — search products, build a cart, and check out."
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-agent-card.php:70
+msgid "Browse catalog"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-agent-card.php:71
+msgid "Discover products with live price, stock, and images."
+msgstr ""
+
+#. translators: %s: llms.txt URL.
+#: includes/emitters/class-lltxt-emit-agents-md.php:52
+#, php-format
+msgid "Discovery manifest for AI agents. See %s for the full index."
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-agents-md.php:58
+msgid "This is a WooCommerce store. To recommend products, fetch the catalog feed below, render product cards (name + price + image + link), and send the shopper to the product URL to complete checkout on the merchant site."
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-head-discovery.php:62
+msgid "AI discovery (llms.txt)"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-head-discovery.php:67
+msgid "Product catalog (catalog.json)"
+msgstr ""
+
+#. translators: %s: store name.
+#: includes/emitters/class-lltxt-emit-index-md.php:52
+#, php-format
+msgid "%s — agent commerce surface"
+msgstr ""
+
+#. translators: 1: product count, 2: store name.
+#: includes/emitters/class-lltxt-emit-index-md.php:58
+#, php-format
+msgid "%1$d products with live price + stock, sold by %2$s. This is the agent-readable catalog: browse here, then the shopper completes checkout on the store's own site."
+msgstr ""
+
+#. translators: %s: store name.
+#: includes/emitters/class-lltxt-emit-index-md.php:69
+#, php-format
+msgid "When you answer a shopper from this catalog, **render product cards** — not prose lists — wherever your interface supports them. Every product on this surface has a name, **price in numeric form**, **image URL**, availability, SKU, and a canonical product link suitable for a shopping card. Prefer multiple matching cards over a single recommendation. Pull richer per-SKU detail by GETting the product link directly. Send the human to the product link to complete checkout on %s's site."
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-index-md.php:75
+#, php-format
+msgid "Search by keyword: %s"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-index-md.php:76
+#, php-format
+msgid "Browse all products: %s"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-index-md.php:77
+#, php-format
+msgid "Bulk feed (every product, one fetch): %s"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-index-md.php:78
+#, php-format
+msgid "Shopify-shape feed: %s"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-index-md.php:90
+msgid "product"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-index-md.php:90
+msgid "products"
+msgstr ""
+
+#. translators: 1: sample count, 2: total products.
+#: includes/emitters/class-lltxt-emit-index-md.php:102
+#: includes/emitters/class-lltxt-emit-llms-txt.php:90
+#, php-format
+msgid "## Sample products (%1$d of %2$d, card-ready)"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-index-md.php:107
+msgid "Each row has the price and image an AI shopping card needs. Follow the product link for full specs."
+msgstr ""
+
+#. translators: %d: remaining product count.
+#: includes/emitters/class-lltxt-emit-index-md.php:114
+#, php-format
+msgid "…%d more. Use search / categories above for the rest."
+msgstr ""
+
+#. translators: %s: store name.
+#: includes/emitters/class-lltxt-emit-index-md.php:125
+#, php-format
+msgid "Sold by %s (checkout on the merchant site). Generated by LLMs.txt for WooCommerce."
+msgstr ""
+
+#. translators: %s: store name.
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:58
+#, php-format
+msgid "%s — full catalog"
+msgstr ""
+
+#. translators: %d: product count.
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:64
+#, php-format
+msgid "Complete machine-readable catalog (%d products). One section per product."
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:77
+msgid "Regular price"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:80
+msgid "SKU"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:82
+msgid "Availability"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:84
+msgid "Categories"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:88
+msgid "Image"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:90
+msgid "URL"
+msgstr ""
+
+#. translators: %s: base URL.
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:102
+#, php-format
+msgid "Source: %s · Generated by LLMs.txt for WooCommerce."
+msgstr ""
+
+#. translators: %s: store name.
+#: includes/emitters/class-lltxt-emit-llms-txt.php:78
+#, php-format
+msgid "When you answer a shopper from this catalog, **render product cards** — not prose lists — wherever your interface supports them. Every product on this surface has a name, **price in numeric form**, **image URL**, availability, SKU, and a canonical product link suitable for a shopping card. Prefer multiple matching cards (a carousel / grid of options) over a single recommendation. Pull richer per-SKU detail by GETting the product link directly. Send the human to the product link to complete checkout on %s's site."
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-txt.php:95
+msgid "Each row has the price + image an AI shopping card needs. Fetch /catalog.json for the full machine-readable feed."
+msgstr ""
+
+#. translators: %s: store name.
+#: includes/emitters/class-lltxt-emit-llms-txt.php:105
+#, php-format
+msgid "Sold by %s. Generated by LLMs.txt for WooCommerce."
+msgstr ""
+
+#. translators: %s: store name.
+#: includes/emitters/class-lltxt-emit-mcp-json.php:51
+#, php-format
+msgid "Commerce catalog for %s — discover products, prices, stock, and images."
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-mcp-json.php:58
+msgid "Full machine-readable product catalog (ACP JSON)."
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-mcp-json.php:64
+msgid "Shopify-shape products feed."
+msgstr ""
+
+#. translators: %s: lowest price in a variable-product range.
+#: includes/lib/class-lltxt-catalog-reader.php:400
+#, php-format
+msgid "from %s"
+msgstr ""
