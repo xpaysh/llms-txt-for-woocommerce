@@ -29,7 +29,14 @@ class Lltxt_Files_Tab {
 		$action = sanitize_key( wp_unslash( $_POST['lltxt_files_action'] ) );
 		if ( 'regen_all' === $action ) {
 			$res    = Lltxt_Refresh::run();
-			$notice = ( 0 === $res['fail'] ) ? 'regen_all_ok' : 'regen_partial';
+			if ( ! empty( $res['fail'] ) ) {
+				$notice = 'regen_partial';
+			} elseif ( ! empty( $res['skipped'] ) ) {
+				set_transient( 'lltxt_last_skipped', $res['skipped'], HOUR_IN_SECONDS );
+				$notice = 'regen_all_skipped';
+			} else {
+				$notice = 'regen_all_ok';
+			}
 		} elseif ( 'regen_one' === $action ) {
 			$class  = isset( $_POST['lltxt_class'] ) ? sanitize_text_field( wp_unslash( $_POST['lltxt_class'] ) ) : '';
 			$valid  = in_array( $class, Lltxt_Plugin::emitter_classes(), true );
@@ -237,6 +244,46 @@ class Lltxt_Files_Tab {
 	}
 
 	/**
+	 * Build the notice text shown after a Regenerate-All run found one or
+	 * more routes in a mode that blocks overwrites (pinned / merchant-
+	 * managed). Names the files so the merchant knows what to act on.
+	 *
+	 * @return string
+	 */
+	private static function skip_notice_text() {
+		$skipped = get_transient( 'lltxt_last_skipped' );
+		delete_transient( 'lltxt_last_skipped' );
+		if ( ! is_array( $skipped ) || empty( $skipped ) ) {
+			return __( 'Some files were skipped because they are pinned or merchant-managed.', 'llms-txt-for-woocommerce' );
+		}
+		$pinned   = array();
+		$merchant = array();
+		foreach ( $skipped as $path => $reason ) {
+			if ( 'pinned' === $reason ) {
+				$pinned[] = '/' . $path;
+			} else {
+				$merchant[] = '/' . $path;
+			}
+		}
+		$lines = array( __( 'Refresh ran, but these files were left alone:', 'llms-txt-for-woocommerce' ) );
+		if ( $pinned ) {
+			$lines[] = sprintf(
+				/* translators: %s: comma-separated list of file paths. */
+				__( 'Pinned (unpin in Version Control): %s', 'llms-txt-for-woocommerce' ),
+				implode( ', ', $pinned )
+			);
+		}
+		if ( $merchant ) {
+			$lines[] = sprintf(
+				/* translators: %s: comma-separated list of file paths. */
+				__( 'Merchant-managed (use "Take over this file" above): %s', 'llms-txt-for-woocommerce' ),
+				implode( ', ', $merchant )
+			);
+		}
+		return implode( ' ', $lines );
+	}
+
+	/**
 	 * Show the action notice.
 	 *
 	 * @return void
@@ -247,8 +294,9 @@ class Lltxt_Files_Tab {
 			return;
 		}
 		$map = array(
-			'regen_all_ok'  => array( 'success', __( 'All files regenerated.', 'llms-txt-for-woocommerce' ) ),
-			'regen_partial' => array( 'warning', __( 'Files regenerated with some errors — see Diagnostics.', 'llms-txt-for-woocommerce' ) ),
+			'regen_all_ok'      => array( 'success', __( 'All files regenerated.', 'llms-txt-for-woocommerce' ) ),
+			'regen_all_skipped' => array( 'warning', self::skip_notice_text() ),
+			'regen_partial'     => array( 'warning', __( 'Files regenerated with some errors — see Diagnostics.', 'llms-txt-for-woocommerce' ) ),
 			'regen_one_ok'  => array( 'success', __( 'File regenerated.', 'llms-txt-for-woocommerce' ) ),
 			'regen_one_err' => array( 'error', __( 'Could not regenerate that file — see Diagnostics.', 'llms-txt-for-woocommerce' ) ),
 			'take_over_ok'  => array( 'success', __( 'File flagged plugin-managed. The next refresh will overwrite the on-disk copy.', 'llms-txt-for-woocommerce' ) ),

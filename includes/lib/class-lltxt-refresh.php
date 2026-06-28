@@ -100,6 +100,9 @@ class Lltxt_Refresh {
 		$ok      = 0;
 		$fail    = 0;
 		$errors  = array();
+		// Routes skipped because the route's current mode forbids overwrite.
+		// path => 'pinned' | 'merchant-managed'.
+		$skipped = array();
 		// Pending snapshot fires: collected during the write loop, fired in
 		// a second pass so we never interleave write+POST.
 		$snaps   = array();
@@ -130,9 +133,11 @@ class Lltxt_Refresh {
 					if ( is_string( $existing ) ) {
 						$snaps[] = array( $path, $existing, 'merchant-pre-existing' );
 					}
+					$skipped[ $path ] = 'merchant-managed';
 					++$ok;
 				} elseif ( Lltxt_Cache::SKIP_PINNED === $result ) {
 					// Pinned to a specific version — nothing to do.
+					$skipped[ $path ] = 'pinned';
 					++$ok;
 				} else {
 					$snaps[] = array( $path, $body, 'plugin-generated' );
@@ -174,9 +179,10 @@ class Lltxt_Refresh {
 		delete_transient( self::LOCK_KEY );
 
 		return array(
-			'ok'     => $ok,
-			'fail'   => $fail,
-			'errors' => $errors,
+			'ok'      => $ok,
+			'fail'    => $fail,
+			'errors'  => $errors,
+			'skipped' => $skipped,
 		);
 	}
 

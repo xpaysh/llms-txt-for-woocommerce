@@ -42,8 +42,15 @@ class Lltxt_Version_Control_Tab {
 		$notice = '';
 
 		if ( 'sync_now' === $action ) {
-			$res    = Lltxt_Refresh::run();
-			$notice = ( 0 === $res['fail'] ) ? 'vc_sync_ok' : 'vc_sync_partial';
+			$res = Lltxt_Refresh::run();
+			if ( ! empty( $res['fail'] ) ) {
+				$notice = 'vc_sync_partial';
+			} elseif ( ! empty( $res['skipped'] ) ) {
+				set_transient( 'lltxt_last_skipped_vc', $res['skipped'], HOUR_IN_SECONDS );
+				$notice = 'vc_sync_skipped';
+			} else {
+				$notice = 'vc_sync_ok';
+			}
 		} elseif ( 'restore' === $action ) {
 			$id     = isset( $_POST['lltxt_version_id'] ) ? (int) $_POST['lltxt_version_id'] : 0;
 			$ok     = self::do_restore( $route, $id );
@@ -228,6 +235,45 @@ class Lltxt_Version_Control_Tab {
 	}
 
 	/**
+	 * Build the notice text for a Refresh that landed but skipped one or
+	 * more routes because their mode forbids overwrite.
+	 *
+	 * @return string
+	 */
+	private static function vc_skip_notice_text() {
+		$skipped = get_transient( 'lltxt_last_skipped_vc' );
+		delete_transient( 'lltxt_last_skipped_vc' );
+		if ( ! is_array( $skipped ) || empty( $skipped ) ) {
+			return __( 'Refresh ran. Some files were left alone because they are pinned or merchant-managed.', 'llms-txt-for-woocommerce' );
+		}
+		$pinned   = array();
+		$merchant = array();
+		foreach ( $skipped as $path => $reason ) {
+			if ( 'pinned' === $reason ) {
+				$pinned[] = '/' . $path;
+			} else {
+				$merchant[] = '/' . $path;
+			}
+		}
+		$lines = array( __( 'Refresh ran, but these files were left alone:', 'llms-txt-for-woocommerce' ) );
+		if ( $pinned ) {
+			$lines[] = sprintf(
+				/* translators: %s: comma-separated file paths. */
+				__( 'Pinned (unpin a row below to resume refresh): %s', 'llms-txt-for-woocommerce' ),
+				implode( ', ', $pinned )
+			);
+		}
+		if ( $merchant ) {
+			$lines[] = sprintf(
+				/* translators: %s: comma-separated file paths. */
+				__( 'Merchant-managed (use "Take over this file" on the Files tab): %s', 'llms-txt-for-woocommerce' ),
+				implode( ', ', $merchant )
+			);
+		}
+		return implode( ' ', $lines );
+	}
+
+	/**
 	 * Render the action notice.
 	 *
 	 * @return void
@@ -239,6 +285,7 @@ class Lltxt_Version_Control_Tab {
 		}
 		$map = array(
 			'vc_sync_ok'      => array( 'success', __( 'Refresh complete. New versions added to your local history.', 'llms-txt-for-woocommerce' ) ),
+			'vc_sync_skipped' => array( 'warning', self::vc_skip_notice_text() ),
 			'vc_sync_partial' => array( 'warning', __( 'Refresh ran with some emitter errors — see Diagnostics.', 'llms-txt-for-woocommerce' ) ),
 			'vc_restored'     => array( 'success', __( 'Restored. Refresh paused for this route — unpin in Version Control to resume.', 'llms-txt-for-woocommerce' ) ),
 			'vc_restore_err'  => array( 'error',   __( 'Could not restore that version.', 'llms-txt-for-woocommerce' ) ),
