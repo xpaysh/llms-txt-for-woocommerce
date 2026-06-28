@@ -58,6 +58,7 @@ final class Lltxt_Plugin {
 
 		if ( is_admin() ) {
 			Lltxt_Admin_Page::init();
+			Lltxt_Product_Metabox::init();
 			add_action( 'admin_notices', array( __CLASS__, 'render_first_run_notice' ) );
 			add_action( 'admin_init', array( __CLASS__, 'maybe_dismiss_notice' ) );
 		}
@@ -132,6 +133,7 @@ final class Lltxt_Plugin {
 		require_once LLTXT_DIR . 'includes/lib/class-lltxt-router.php';
 		require_once LLTXT_DIR . 'includes/lib/class-lltxt-refresh.php';
 		require_once LLTXT_DIR . 'includes/lib/class-lltxt-snapshot.php';
+		require_once LLTXT_DIR . 'includes/lib/class-lltxt-seo-bridge.php';
 
 		// Emitters.
 		require_once LLTXT_DIR . 'includes/emitters/interface-lltxt-emitter.php';
@@ -158,6 +160,7 @@ final class Lltxt_Plugin {
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-version-control-tab.php';
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-privacy-tab.php';
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-diagnostics-tab.php';
+			require_once LLTXT_DIR . 'includes/admin/class-lltxt-product-metabox.php';
 		}
 	}
 

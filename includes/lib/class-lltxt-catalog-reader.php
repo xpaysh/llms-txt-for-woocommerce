@@ -82,6 +82,30 @@ class Lltxt_Catalog_Reader {
 			$query_args['category'] = array_filter( array_map( array( __CLASS__, 'cat_slug' ), (array) $args['include_cats'] ) );
 		}
 
+		// WC stores catalog visibility as product_visibility taxonomy terms; products
+		// flagged exclude-from-catalog / exclude-from-search must not leak into the
+		// public AI-discovery files. Default = "visible" (catalog + search). Override
+		// via filter to include 'catalog' or 'search'-only products.
+		$visibility = apply_filters( 'lltxt_catalog_visibility', array( 'visible' ), $args );
+		$tax_query  = self::build_visibility_tax_query( (array) $visibility );
+		if ( ! empty( $tax_query ) ) {
+			$query_args['tax_query'] = $tax_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+		}
+
+		// Per-product opt-out (_lltxt_exclude metabox) wins over everything.
+		$query_args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			'relation' => 'OR',
+			array(
+				'key'     => '_lltxt_exclude',
+				'compare' => 'NOT EXISTS',
+			),
+			array(
+				'key'     => '_lltxt_exclude',
+				'value'   => '1',
+				'compare' => '!=',
+			),
+		);
+
 		$products = wc_get_products( $query_args );
 		$rows     = array();
 
@@ -101,6 +125,43 @@ class Lltxt_Catalog_Reader {
 
 		set_transient( $cache_key, $rows, self::CACHE_TTL );
 		return $rows;
+	}
+
+	/**
+	 * Build the tax_query that excludes products WC has marked exclude-from-catalog
+	 * / exclude-from-search, based on the desired visibility set.
+	 *
+	 * @param string[] $visibility One or more of: visible, catalog, search, hidden.
+	 * @return array
+	 */
+	private static function build_visibility_tax_query( $visibility ) {
+		$visibility = array_filter( array_map( 'strval', $visibility ) );
+		if ( empty( $visibility ) ) {
+			return array();
+		}
+		// All four = no filter needed.
+		if ( in_array( 'hidden', $visibility, true ) && in_array( 'visible', $visibility, true )
+			&& in_array( 'catalog', $visibility, true ) && in_array( 'search', $visibility, true ) ) {
+			return array();
+		}
+		$exclude_terms = array();
+		if ( ! in_array( 'search', $visibility, true ) && ! in_array( 'hidden', $visibility, true ) ) {
+			$exclude_terms[] = 'exclude-from-catalog';
+		}
+		if ( ! in_array( 'catalog', $visibility, true ) && ! in_array( 'hidden', $visibility, true ) ) {
+			$exclude_terms[] = 'exclude-from-search';
+		}
+		if ( empty( $exclude_terms ) ) {
+			return array();
+		}
+		return array(
+			array(
+				'taxonomy' => 'product_visibility',
+				'field'    => 'slug',
+				'terms'    => array_values( array_unique( $exclude_terms ) ),
+				'operator' => 'NOT IN',
+			),
+		);
 	}
 
 	/**
@@ -219,12 +280,30 @@ class Lltxt_Catalog_Reader {
 			'categories'        => $cat_names,
 			'category_refs'     => $cat_refs,
 			'category_ids'      => array_map( 'intval', $cat_ids ),
-			'short_description' => wp_strip_all_tags( $product->get_short_description() ),
+			'short_description' => self::best_description( $id, $product ),
 			'description'       => wp_strip_all_tags( $product->get_description() ),
 			'sku'               => $product->get_sku(),
 			'total_sales'       => (int) get_post_meta( $id, 'total_sales', true ),
 			'featured'          => (bool) $product->is_featured(),
 		);
+	}
+
+	/**
+	 * Best-available product description: hand-curated SEO-plugin meta first
+	 * (Yoast / Rank Math / AIOSEO / SEOPress / Slim SEO), then WC short_description.
+	 *
+	 * @param int        $id      Product post ID.
+	 * @param WC_Product $product Product object.
+	 * @return string
+	 */
+	private static function best_description( $id, $product ) {
+		if ( class_exists( 'Lltxt_Seo_Bridge' ) ) {
+			$desc = Lltxt_Seo_Bridge::description_for( $id );
+			if ( '' !== $desc ) {
+				return $desc;
+			}
+		}
+		return wp_strip_all_tags( $product->get_short_description() );
 	}
 
 	/**

@@ -52,6 +52,32 @@ class Lltxt_Router {
 		add_action( 'init', array( __CLASS__, 'register_rules' ) );
 		add_filter( 'query_vars', array( __CLASS__, 'query_vars' ) );
 		add_action( 'template_redirect', array( __CLASS__, 'maybe_deliver' ), 0 );
+		// Stop WP from 301-ing /llms.txt/ → /llms.txt — strict crawlers treat a 301
+		// on a discovery file as "abandon attempt".
+		add_filter( 'redirect_canonical', array( __CLASS__, 'no_canonical_redirect_for_routes' ), 10, 2 );
+	}
+
+	/**
+	 * Suppress redirect_canonical() for our routes (bare + trailing-slash variants).
+	 *
+	 * @param string $redirect_url  The redirect WP wants to send.
+	 * @param string $requested_url The URL actually requested.
+	 * @return string|false
+	 */
+	public static function no_canonical_redirect_for_routes( $redirect_url, $requested_url ) {
+		$path = wp_parse_url( (string) $requested_url, PHP_URL_PATH );
+		if ( ! is_string( $path ) || '' === $path ) {
+			return $redirect_url;
+		}
+		$path = '/' . ltrim( $path, '/' );
+		foreach ( array_keys( self::routes() ) as $route ) {
+			$needle      = '/' . $route;
+			$needle_slash = $needle . '/';
+			if ( $path === $needle || $path === $needle_slash ) {
+				return false;
+			}
+		}
+		return $redirect_url;
 	}
 
 	/**

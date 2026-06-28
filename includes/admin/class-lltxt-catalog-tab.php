@@ -136,5 +136,11 @@ class Lltxt_Catalog_Tab {
 			<?php submit_button( __( 'Save Catalog Settings', 'llms-txt-for-woocommerce' ) ); ?>
 		</form>
 		<?php
+		if ( class_exists( 'Lltxt_Seo_Bridge' ) ) {
+			$src = Lltxt_Seo_Bridge::detected_source();
+			echo '<p class="description" style="margin-top:12px;"><strong>'
+				. esc_html__( 'SEO source for product descriptions:', 'llms-txt-for-woocommerce' )
+				. '</strong> ' . esc_html( $src ) . '</p>';
+		}
 	}
 }

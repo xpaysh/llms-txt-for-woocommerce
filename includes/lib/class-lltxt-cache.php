@@ -258,22 +258,103 @@ class Lltxt_Cache {
 			return new WP_Error( 'lltxt_not_writable', sprintf( 'Directory not writable: %s', $dir ) );
 		}
 
-		$tmp = $full . '.tmp-' . wp_generate_password( 8, false );
-		// phpcs:ignore WordPress.WP.AlternativeFunctions
-		$bytes = @file_put_contents( $tmp, $content, LOCK_EX );
-		if ( false === $bytes ) {
-			return new WP_Error( 'lltxt_write', sprintf( 'Could not write temp file: %s', $tmp ) );
+		$result = self::write_with_fallbacks( $full, $content );
+		if ( is_wp_error( $result ) ) {
+			return $result;
 		}
+		$bytes = (int) $result;
 
-		// phpcs:ignore WordPress.WP.AlternativeFunctions
-		if ( ! @rename( $tmp, $full ) ) {
-			// phpcs:ignore WordPress.WP.AlternativeFunctions
-			@unlink( $tmp );
-			return new WP_Error( 'lltxt_rename', sprintf( 'Could not move into place: %s', $full ) );
-		}
+		// Flywheel's webroot is the sibling `www/` (not ABSPATH). If that layout is
+		// detected, mirror the file there so the public URL actually serves it.
+		self::maybe_mirror_to_flywheel_www( $relative_path, $content );
 
 		self::record_timestamp( $relative_path, time(), $bytes );
 		return true;
+	}
+
+	/**
+	 * Try the fast path first (file_put_contents + atomic rename); fall back to
+	 * WP_Filesystem (handles WP Engine / VIP / hardened hosts); finally try a
+	 * raw fopen stream. Each transition is logged so support can diagnose.
+	 *
+	 * @param string $full    Absolute destination path.
+	 * @param string $content File body.
+	 * @return int|WP_Error  Bytes written on success.
+	 */
+	private static function write_with_fallbacks( $full, $content ) {
+		$dir = dirname( $full );
+
+		// 1. Fast path — atomic temp + rename.
+		$tmp = $full . '.tmp-' . wp_generate_password( 8, false );
+		// phpcs:ignore WordPress.WP.AlternativeFunctions
+		$bytes = @file_put_contents( $tmp, $content, LOCK_EX );
+		if ( false !== $bytes ) {
+			// phpcs:ignore WordPress.WP.AlternativeFunctions
+			if ( @rename( $tmp, $full ) ) {
+				return (int) $bytes;
+			}
+			// phpcs:ignore WordPress.WP.AlternativeFunctions
+			@unlink( $tmp );
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log( '[lltxt] fast-path rename failed for ' . $full . ', falling back to WP_Filesystem' );
+		} else {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log( '[lltxt] file_put_contents failed for ' . $tmp . ', falling back to WP_Filesystem' );
+		}
+
+		// 2. WP_Filesystem (direct method) — works on hardened hosts.
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+		if ( WP_Filesystem() ) {
+			global $wp_filesystem;
+			if ( $wp_filesystem && $wp_filesystem->put_contents( $full, $content, defined( 'FS_CHMOD_FILE' ) ? FS_CHMOD_FILE : false ) ) {
+				return strlen( $content );
+			}
+		}
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		error_log( '[lltxt] WP_Filesystem write failed for ' . $full . ', falling back to fopen' );
+
+		// 3. fopen stream fallback (some hosts block file_put_contents but allow streams).
+		$tmp2 = $full . '.tmp-' . wp_generate_password( 8, false );
+		// phpcs:ignore WordPress.WP.AlternativeFunctions
+		$fh = @fopen( $tmp2, 'wb' );
+		if ( $fh ) {
+			// phpcs:ignore WordPress.WP.AlternativeFunctions
+			$written = @fwrite( $fh, $content );
+			// phpcs:ignore WordPress.WP.AlternativeFunctions
+			@fclose( $fh );
+			// phpcs:ignore WordPress.WP.AlternativeFunctions
+			if ( false !== $written && @rename( $tmp2, $full ) ) {
+				return (int) $written;
+			}
+			// phpcs:ignore WordPress.WP.AlternativeFunctions
+			@unlink( $tmp2 );
+		}
+
+		return new WP_Error( 'lltxt_write_all_failed', sprintf( 'All write strategies failed for: %s (dir=%s)', $full, $dir ) );
+	}
+
+	/**
+	 * Flywheel hosts the webroot at `dirname(ABSPATH)/www/`. Mirror writes there
+	 * so /llms.txt actually resolves — fixed by ryhowa 8.2.8 upstream.
+	 *
+	 * @param string $relative_path Relative path.
+	 * @param string $content       Body to mirror.
+	 * @return void
+	 */
+	private static function maybe_mirror_to_flywheel_www( $relative_path, $content ) {
+		$candidate = dirname( untrailingslashit( ABSPATH ) ) . '/www/';
+		if ( ! is_dir( $candidate ) ) {
+			return;
+		}
+		$mirror = $candidate . ltrim( $relative_path, '/' );
+		$mdir   = dirname( $mirror );
+		if ( ! wp_mkdir_p( $mdir ) ) {
+			return;
+		}
+		// phpcs:ignore WordPress.WP.AlternativeFunctions
+		@file_put_contents( $mirror, $content, LOCK_EX );
 	}
 
 	/**
