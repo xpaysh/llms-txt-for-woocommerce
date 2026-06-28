@@ -1,7 +1,7 @@
 === LLMs.txt for WooCommerce ===
 Contributors: xpay
 Tags: llms.txt, woocommerce, chatgpt, ai search, generative engine optimization
-Requires at least: 6.0
+Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.0
