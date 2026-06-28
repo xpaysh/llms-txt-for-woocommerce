@@ -29,17 +29,8 @@ class Lltxt_Router {
 	 */
 	public static function routes() {
 		return array(
-			'llms.txt'                      => 'llms.txt',
-			'llms-full.txt'                 => 'llms-full.txt',
-			'index.md'                      => 'index.md',
-			'catalog.json'                  => 'catalog.json',
-			'products.json'                 => 'products.json',
-			'agents.md'                     => 'agents.md',
-			'sitemap-ai.xml'                => 'sitemap-ai.xml',
-			'feed/google-shopping.xml'      => 'feed/google-shopping.xml',
-			'.well-known/agent-card.json'   => '.well-known/agent-card.json',
-			'.well-known/mcp.json'          => '.well-known/mcp.json',
-			'.well-known/ucp'               => '.well-known/ucp',
+			'llms.txt'      => 'llms.txt',
+			'llms-full.txt' => 'llms-full.txt',
 		);
 	}
 

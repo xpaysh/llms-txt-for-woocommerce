@@ -27,7 +27,6 @@ class Lltxt_Admin_Page {
 	public static function tabs() {
 		return array(
 			'files'           => array( 'Files', 'Lltxt_Files_Tab' ),
-			'bots'            => array( 'AI Bots', 'Lltxt_Bots_Tab' ),
 			'catalog'         => array( 'Catalog', 'Lltxt_Catalog_Tab' ),
 			'version-control' => array( 'Version Control', 'Lltxt_Version_Control_Tab' ),
 			'privacy'         => array( 'Privacy', 'Lltxt_Privacy_Tab' ),

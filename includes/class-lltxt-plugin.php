@@ -52,10 +52,6 @@ final class Lltxt_Plugin {
 		Lltxt_Router::init();
 		Lltxt_Refresh::init();
 
-		// Hook-only emitters (no static file).
-		add_filter( 'robots_txt', array( 'Lltxt_Emit_Robots_Txt', 'filter_robots_txt' ), 20, 2 );
-		add_action( 'wp_head', array( 'Lltxt_Emit_Head_Discovery', 'render_head' ), 5 );
-
 		if ( is_admin() ) {
 			Lltxt_Admin_Page::init();
 			Lltxt_Product_Metabox::init();
@@ -135,27 +131,15 @@ final class Lltxt_Plugin {
 		require_once LLTXT_DIR . 'includes/lib/class-lltxt-snapshot.php';
 		require_once LLTXT_DIR . 'includes/lib/class-lltxt-seo-bridge.php';
 
-		// Emitters.
+		// Emitters — just llms.txt + llms-full.txt. WC-specialized content.
 		require_once LLTXT_DIR . 'includes/emitters/interface-lltxt-emitter.php';
 		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-llms-txt.php';
-		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-index-md.php';
 		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-llms-full-txt.php';
-		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-catalog-json.php';
-		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-products-json.php';
-		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-agent-card.php';
-		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-mcp-json.php';
-		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-ucp.php';
-		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-agents-md.php';
-		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-sitemap-ai.php';
-		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-robots-txt.php';
-		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-google-shopping-xml.php';
-		require_once LLTXT_DIR . 'includes/emitters/class-lltxt-emit-head-discovery.php';
 
 		// Admin.
 		if ( is_admin() ) {
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-admin-page.php';
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-files-tab.php';
-			require_once LLTXT_DIR . 'includes/admin/class-lltxt-bots-tab.php';
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-catalog-tab.php';
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-version-control-tab.php';
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-privacy-tab.php';
@@ -174,18 +158,7 @@ final class Lltxt_Plugin {
 	public static function emitter_classes() {
 		return array(
 			'Lltxt_Emit_Llms_Txt',
-			'Lltxt_Emit_Index_Md',
 			'Lltxt_Emit_Llms_Full_Txt',
-			'Lltxt_Emit_Catalog_Json',
-			'Lltxt_Emit_Products_Json',
-			'Lltxt_Emit_Agent_Card',
-			'Lltxt_Emit_Mcp_Json',
-			'Lltxt_Emit_Ucp',
-			'Lltxt_Emit_Agents_Md',
-			'Lltxt_Emit_Sitemap_Ai',
-			'Lltxt_Emit_Google_Shopping_Xml',
-			'Lltxt_Emit_Robots_Txt',
-			'Lltxt_Emit_Head_Discovery',
 		);
 	}
 
@@ -223,9 +196,6 @@ final class Lltxt_Plugin {
 		}
 
 		// Seed defaults without clobbering existing operator choices.
-		if ( false === get_option( 'lltxt_allowed_bots', false ) ) {
-			add_option( 'lltxt_allowed_bots', Lltxt_Emit_Robots_Txt_defaults() );
-		}
 		if ( false === get_option( 'lltxt_catalog_settings', false ) ) {
 			add_option(
 				'lltxt_catalog_settings',
@@ -278,19 +248,3 @@ final class Lltxt_Plugin {
 	}
 }
 
-/**
- * Default allowed-bots map. Declared as a function so activation can call it
- * before the emitter class file is required.
- *
- * @return array<string,bool>
- */
-function Lltxt_Emit_Robots_Txt_defaults() {
-	return array(
-		'ChatGPT-User'  => true,
-		'Claude-User'   => true,
-		'PerplexityBot' => true,
-		'GoogleOther'   => true,
-		'OAI-SearchBot' => true,
-		'GPTBot'        => false, // Training crawler, not a shopping agent — default OFF.
-	);
-}

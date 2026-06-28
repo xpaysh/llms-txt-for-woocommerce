@@ -212,12 +212,6 @@ class Lltxt_Files_Tab {
 	 * @return string
 	 */
 	private static function hook_label( $class ) {
-		if ( 'Lltxt_Emit_Robots_Txt' === $class ) {
-			return 'robots.txt (filter)';
-		}
-		if ( 'Lltxt_Emit_Head_Discovery' === $class ) {
-			return '<head> discovery + JSON-LD';
-		}
 		return $class;
 	}
 
