@@ -86,7 +86,8 @@ class Lltxt_Product_Metabox {
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
-		$value = ( isset( $_POST['lltxt_exclude'] ) && '1' === (string) $_POST['lltxt_exclude'] ) ? '1' : '0';
+		$raw   = isset( $_POST['lltxt_exclude'] ) ? sanitize_text_field( wp_unslash( $_POST['lltxt_exclude'] ) ) : '';
+		$value = ( '1' === $raw ) ? '1' : '0';
 		update_post_meta( $post_id, self::META_KEY, $value );
 	}
 }

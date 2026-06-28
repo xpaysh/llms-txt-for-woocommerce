@@ -127,7 +127,7 @@ class Lltxt_Version_Control_Tab {
 			echo wp_kses_post(
 				sprintf(
 					/* translators: %s: Privacy tab URL. */
-					__( 'Backend is disabled. Enable phone-home in the <a href="%s">Privacy tab</a> to see version history.', 'llms-txt-for-woocommerce' ),
+					__( 'Sync is off. Enable it in the <a href="%s">Privacy tab</a> to see version history.', 'llms-txt-for-woocommerce' ),
 					esc_url( $privacy_url )
 				)
 			);

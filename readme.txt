@@ -2,13 +2,13 @@
 Contributors: xpay
 Tags: llms.txt, ai discovery, woocommerce, chatgpt, agents
 Requires at least: 6.0
-Tested up to: 6.5
+Tested up to: 6.8
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-The llms.txt plugin specialised for commerce. Generates /llms.txt and /llms-full.txt from your live WooCommerce catalog so ChatGPT, Claude, Perplexity and Google AI can find and recommend your products.
+The llms.txt plugin specialised for WooCommerce. Generates /llms.txt and /llms-full.txt so AI shopping agents can find your products.
 
 == Description ==
 
@@ -103,7 +103,7 @@ Edit the product, tick **Exclude this product from /llms.txt** in the **LLMs.txt
 2. Settings: the Files tab with per-file previews and regenerate-now.
 3. Version Control tab: history list with one-click restore and pin.
 4. Per-product Exclude from llms.txt metabox.
-5. Privacy tab: phone-home toggle + delete-my-data button.
+5. Privacy tab: version-history sync toggle + delete-my-data button.
 
 == Changelog ==
 

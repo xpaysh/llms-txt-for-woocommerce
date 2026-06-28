@@ -12,9 +12,9 @@
  * Domain Path:       /languages
  * Requires at least: 6.0
  * Requires PHP:      7.4
- * Tested up to:      6.5
+ * Tested up to:      6.8
  * WC requires at least: 7.0
- * WC tested up to:   8.5
+ * WC tested up to:   9.5
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
@@ -34,10 +34,17 @@ require_once LLTXT_DIR . 'includes/class-lltxt-plugin.php';
 register_activation_hook( __FILE__, array( 'Lltxt_Plugin', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Lltxt_Plugin', 'deactivate' ) );
 
+// Translations are auto-loaded by WordPress for plugins hosted on wp.org
+// since 4.6 — no manual load_plugin_textdomain() needed.
+add_action( 'plugins_loaded', array( 'Lltxt_Plugin', 'instance' ) );
+
+// Declare compatibility with WooCommerce High-Performance Order Storage (HPOS).
+// We never read or write orders, so we are safe with either storage backend.
 add_action(
-	'plugins_loaded',
+	'before_woocommerce_init',
 	function () {
-		load_plugin_textdomain( 'llms-txt-for-woocommerce', false, dirname( LLTXT_BASENAME ) . '/languages' );
-		Lltxt_Plugin::instance();
+		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
 	}
 );

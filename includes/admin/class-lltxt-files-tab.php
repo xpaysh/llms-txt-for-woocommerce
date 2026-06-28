@@ -1,6 +1,6 @@
 <?php
 /**
- * Files tab — table of the 13 emitted files with last-generated time + per-file
+ * Files tab — table of the emitted files with last-generated time + per-file
  * Regenerate / Preview, plus a "Regenerate All" button.
  *
  * SPDX-License-Identifier: GPL-2.0-or-later

@@ -254,7 +254,8 @@ class Lltxt_Cache {
 			return new WP_Error( 'lltxt_mkdir', sprintf( 'Could not create directory: %s', $dir ) );
 		}
 
-		if ( ! is_writable( $dir ) ) {
+		// wp_is_writable() is the WP_Filesystem-aware wrapper around is_writable().
+		if ( ! wp_is_writable( $dir ) ) {
 			return new WP_Error( 'lltxt_not_writable', sprintf( 'Directory not writable: %s', $dir ) );
 		}
 
@@ -286,7 +287,7 @@ class Lltxt_Cache {
 
 		// 1. Fast path — atomic temp + rename.
 		$tmp = $full . '.tmp-' . wp_generate_password( 8, false );
-		// phpcs:ignore WordPress.WP.AlternativeFunctions
+		// phpcs:ignore WordPress.WP.AlternativeFunctions, PluginCheck.CodeAnalysis.WriteFile.ABSPATHDetected -- writing /llms.txt to the site root is the plugin's whole purpose.
 		$bytes = @file_put_contents( $tmp, $content, LOCK_EX );
 		if ( false !== $bytes ) {
 			// phpcs:ignore WordPress.WP.AlternativeFunctions
@@ -353,7 +354,7 @@ class Lltxt_Cache {
 		if ( ! wp_mkdir_p( $mdir ) ) {
 			return;
 		}
-		// phpcs:ignore WordPress.WP.AlternativeFunctions
+		// phpcs:ignore WordPress.WP.AlternativeFunctions, PluginCheck.CodeAnalysis.WriteFile.ABSPATHDetected -- Flywheel mirror write to the host's actual webroot (outside ABSPATH); plugin's whole purpose is serving llms.txt at the site root.
 		@file_put_contents( $mirror, $content, LOCK_EX );
 	}
 

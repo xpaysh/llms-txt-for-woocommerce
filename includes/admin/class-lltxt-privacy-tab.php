@@ -65,17 +65,17 @@ class Lltxt_Privacy_Tab {
 		<form method="post">
 			<?php wp_nonce_field( 'lltxt_privacy' ); ?>
 			<input type="hidden" name="lltxt_privacy_action" value="save_toggle" />
-			<h3><?php esc_html_e( 'Version-control phone-home', 'llms-txt-for-woocommerce' ); ?></h3>
+			<h3><?php esc_html_e( 'Version history sync', 'llms-txt-for-woocommerce' ); ?></h3>
 			<p>
 				<label>
 					<input type="checkbox" name="lltxt_phone_home" value="1" <?php checked( $enabled, true ); ?> />
-					<?php esc_html_e( 'Sync generated files to xpay.sh so I can see version history and roll back.', 'llms-txt-for-woocommerce' ); ?>
+					<?php esc_html_e( 'Sync /llms.txt and /llms-full.txt to xpay.sh so I can see version history and roll back.', 'llms-txt-for-woocommerce' ); ?>
 				</label>
 			</p>
 			<div class="card" style="max-width:none; padding:1em; margin-bottom:1em;">
 				<p><strong><?php esc_html_e( 'Exactly what is sent — and nothing else:', 'llms-txt-for-woocommerce' ); ?></strong></p>
 				<ul style="list-style:disc; margin-left:2em;">
-					<li><?php esc_html_e( 'The rendered file bodies for each of the 13 routes (the same bodies your /llms.txt etc. serve publicly).', 'llms-txt-for-woocommerce' ); ?></li>
+					<li><?php esc_html_e( 'The rendered /llms.txt and /llms-full.txt bodies (the same bodies served publicly from your domain).', 'llms-txt-for-woocommerce' ); ?></li>
 					<li><?php esc_html_e( 'WordPress, WooCommerce, and plugin version strings.', 'llms-txt-for-woocommerce' ); ?></li>
 					<li><?php esc_html_e( 'A sha256 of a randomly-generated api_key (raw key never leaves your site).', 'llms-txt-for-woocommerce' ); ?></li>
 					<li><?php esc_html_e( 'Your slug (derived from your domain) and your home URL.', 'llms-txt-for-woocommerce' ); ?></li>
@@ -130,12 +130,12 @@ class Lltxt_Privacy_Tab {
 		<hr />
 
 		<h3><?php esc_html_e( 'Delete my data from xpay.sh', 'llms-txt-for-woocommerce' ); ?></h3>
-		<p class="description"><?php esc_html_e( 'Removes every snapshot and the merchant row for this site, then turns phone-home off.', 'llms-txt-for-woocommerce' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Removes every version we have stored for your site, then turns sync off.', 'llms-txt-for-woocommerce' ); ?></p>
 		<form method="post">
 			<?php wp_nonce_field( 'lltxt_privacy' ); ?>
 			<input type="hidden" name="lltxt_privacy_action" value="delete_data" />
 			<button type="submit" class="button button-secondary"
-				onclick="return confirm('<?php echo esc_js( __( 'Delete all your data from xpay.sh and disable phone-home?', 'llms-txt-for-woocommerce' ) ); ?>');">
+				onclick="return confirm('<?php echo esc_js( __( 'Delete all your data from xpay.sh and disable sync?', 'llms-txt-for-woocommerce' ) ); ?>');">
 				<?php esc_html_e( 'Delete my data', 'llms-txt-for-woocommerce' ); ?>
 			</button>
 		</form>
@@ -155,7 +155,7 @@ class Lltxt_Privacy_Tab {
 		$map = array(
 			'priv_enabled'    => array( 'success', __( 'Phone-home enabled. Snapshots will sync to xpay.sh on every refresh.', 'llms-txt-for-woocommerce' ) ),
 			'priv_disabled'   => array( 'success', __( 'Phone-home disabled. Nothing will be sent to xpay.sh.', 'llms-txt-for-woocommerce' ) ),
-			'priv_deleted'    => array( 'success', __( 'Your data was deleted from xpay.sh and phone-home is now off.', 'llms-txt-for-woocommerce' ) ),
+			'priv_deleted'    => array( 'success', __( 'Your data was deleted from xpay.sh and sync is now off.', 'llms-txt-for-woocommerce' ) ),
 			'priv_delete_err' => array( 'error',   __( 'Could not delete remote data — try again, or contact xpay.sh support.', 'llms-txt-for-woocommerce' ) ),
 		);
 		if ( ! isset( $map[ $code ] ) ) {

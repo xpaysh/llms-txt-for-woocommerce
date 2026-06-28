@@ -82,7 +82,7 @@ final class Lltxt_Plugin {
 		echo wp_kses_post(
 			sprintf(
 				/* translators: %s: settings URL. */
-				__( '<strong>LLMs.txt for WooCommerce</strong> syncs your AI-discovery files to xpay.sh so you can see version history and roll back. Toggle off in <a href="%s">Settings → LLMs.txt → Privacy</a>.', 'llms-txt-for-woocommerce' ),
+				__( '<strong>LLMs.txt for WooCommerce</strong> keeps a version history of your /llms.txt and /llms-full.txt at xpay.sh so you can roll back if needed. Turn it off in <a href="%s">Settings → LLMs.txt → Privacy</a>.', 'llms-txt-for-woocommerce' ),
 				esc_url( $settings_url )
 			)
 		);
