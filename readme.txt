@@ -102,11 +102,10 @@ Just one small ping on activation and weekly: your URL, your WordPress / WooComm
 
 == Screenshots ==
 
-1. Your live `/llms.txt` — a card-ready product summary AI shoppers can read at a glance.
-2. The Files tab — preview each file and regenerate on demand.
-3. Version Control — every prior version, one-click restore and pin.
-4. The per-product *Exclude from llms.txt* checkbox on every product edit screen.
-5. Privacy tab — version-history sync toggle and delete-my-data button.
+1. The Files tab — `/llms.txt` and `/llms-full.txt` auto-generated from your live WooCommerce catalog.
+2. Version Control — every refresh kept locally on your site, one-click restore or pin.
+3. Catalog tab — pick how many products to feature, which categories to include or exclude.
+4. Diagnostics — preview the rendered file body and the refresh log.
 
 == Changelog ==
 
