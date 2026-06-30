@@ -1,24 +1,25 @@
 <?php
 /**
- * Plugin Name:       LLMs.txt for WooCommerce
- * Plugin URI:        https://github.com/xpaysh/llms-txt-for-woocommerce
- * Description:       Will ChatGPT recommend your WooCommerce store? This plugin makes it happen. Generates /llms.txt and /llms-full.txt from your live catalog so AI shopping agents find your products. Free forever.
+ * Plugin Name:       Agentic Commerce – LLMs.txt for WooCommerce
+ * Plugin URI:        https://github.com/xpaysh/agentic-commerce-llms-txt
+ * Description:       Generates /llms.txt and /llms-full.txt from your live WooCommerce catalog so AI shopping agents can read your products, prices, and stock.
  * Version:           1.0.0
- * Author:            xpay
- * Author URI:        https://xpay.sh
+ * Author:            xpaysh
+ * Author URI:        https://www.xpay.sh/agentic-commerce/
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       llms-txt-for-woocommerce
+ * Text Domain:       agentic-commerce-llms-txt
  * Domain Path:       /languages
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Tested up to:      7.0
+ * Requires Plugins:  woocommerce
  * WC requires at least: 7.0
  * WC tested up to:   9.5
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
- * @package LLMsTxtForWooCommerce
+ * @package AgenticCommerceLlmsTxt
  */
 
 defined( 'ABSPATH' ) || exit;

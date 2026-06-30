@@ -1,4 +1,4 @@
-# LLMs.txt for WooCommerce
+# Agentic Commerce – LLMs.txt for WooCommerce
 
 Auto-generate `llms.txt`, `catalog.json`, `agents.md` and 10 more AI-discovery
 files so ChatGPT, Claude, Perplexity and Google AI can find, understand, and

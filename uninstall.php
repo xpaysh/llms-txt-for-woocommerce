@@ -20,7 +20,7 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 //    uninstalled_at is older than 180 days, so retention is bounded.
 //    Synchronous, 5s timeout, errors ignored. Must read api_key + toggle +
 //    slug BEFORE we delete the options below.
-$lltxt_phone_home = (int) get_option( 'lltxt_phone_home', 1 );
+$lltxt_phone_home = (int) get_option( 'lltxt_phone_home', 0 );
 $lltxt_api_key    = (string) get_option( 'lltxt_api_key', '' );
 $lltxt_base_url   = (string) get_option(
 	'lltxt_backend_base_url',

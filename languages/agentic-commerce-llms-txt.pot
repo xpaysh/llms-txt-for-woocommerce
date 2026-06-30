@@ -1,0 +1,567 @@
+# Copyright (C) 2026 xpaysh
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Agentic Commerce – LLMs.txt for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/agentic-commerce-llms-txt\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-30T14:47:09+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: agentic-commerce-llms-txt\n"
+
+#. Plugin Name of the plugin
+#: agentic-commerce-llms-txt.php
+#: includes/admin/class-lltxt-admin-page.php:57
+#: includes/admin/class-lltxt-admin-page.php:58
+#: includes/admin/class-lltxt-admin-page.php:122
+msgid "Agentic Commerce – LLMs.txt for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: agentic-commerce-llms-txt.php
+msgid "https://github.com/xpaysh/agentic-commerce-llms-txt"
+msgstr ""
+
+#. Description of the plugin
+#: agentic-commerce-llms-txt.php
+msgid "Generates /llms.txt and /llms-full.txt from your live WooCommerce catalog so AI shopping agents can read your products, prices, and stock."
+msgstr ""
+
+#. Author of the plugin
+#: agentic-commerce-llms-txt.php
+msgid "xpaysh"
+msgstr ""
+
+#. Author URI of the plugin
+#: agentic-commerce-llms-txt.php
+msgid "https://www.xpay.sh/agentic-commerce/"
+msgstr ""
+
+#: includes/admin/class-lltxt-admin-page.php:73
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/class-lltxt-admin-page.php:116
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: includes/admin/class-lltxt-admin-page.php:125
+msgid "WooCommerce is not active. The discovery files will be generated, but product data will be empty until WooCommerce is enabled."
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:68
+msgid "Catalog settings saved. Regenerate files from the Files tab to apply."
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:81
+msgid "Best selling (total sales)"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:82
+msgid "Newest first"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:83
+msgid "Title (A–Z)"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:84
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:74
+msgid "Price"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:92
+msgid "Products to surface (top N)"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:97
+msgid "How many products to pull for the sample tables and feeds (10–500). Default 100."
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:101
+msgid "Ordering"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:111
+msgid "Only include categories"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:120
+msgid "Leave empty to include all categories."
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:124
+msgid "Exclude categories"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:133
+msgid "Products in these categories are removed from the surfaced set."
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:139
+msgid "Save Catalog Settings"
+msgstr ""
+
+#: includes/admin/class-lltxt-catalog-tab.php:145
+msgid "SEO source for product descriptions:"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:48
+msgid "File preview"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:57
+#: includes/admin/class-lltxt-files-tab.php:189
+msgid "Preview"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:71
+msgid "Not generated yet."
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:82
+msgid "Refresh log"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:84
+msgid "No refreshes recorded yet."
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:88
+msgid "When"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:89
+msgid "OK"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:90
+msgid "Failed"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:91
+msgid "Duration"
+msgstr ""
+
+#: includes/admin/class-lltxt-diagnostics-tab.php:92
+msgid "Errors"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:86
+msgid "These files are generated locally on your server and served from your domain. Daily refresh runs via WP-Cron; you can also regenerate on demand below."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:90
+msgid "Regenerate All"
+msgstr ""
+
+#. translators: %s: human-readable time difference.
+#: includes/admin/class-lltxt-files-tab.php:97
+#, php-format
+msgid "Last full refresh: %s ago"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:107
+msgid "File"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:108
+msgid "Path"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:109
+msgid "Last Generated"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:110
+msgid "Mode"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:111
+#: includes/admin/class-lltxt-version-control-tab.php:170
+msgid "Actions"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:139
+msgid "Served live (no static file)"
+msgstr ""
+
+#. translators: %s: time difference.
+#. translators: %s: human-readable time diff.
+#: includes/admin/class-lltxt-files-tab.php:144
+#: includes/admin/class-lltxt-privacy-tab.php:126
+#, php-format
+msgid "%s ago"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:149
+msgid "Not generated yet"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:165
+msgid "plugin-managed"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:166
+msgid "merchant-managed"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:167
+msgid "pinned"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:187
+msgid "Regenerate"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:196
+msgid "Take over this file? The plugin will overwrite your existing file on the next refresh. Your original was already backed up to /wp-content/uploads/lltxt-backups/."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:197
+msgid "Take over this file"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:210
+msgid "Restore your original file (the one in your webroot before this plugin was activated)? The plugin will stop refreshing this route until you flip it back."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:211
+msgid "Restore my version"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:260
+msgid "Some files were skipped because they are pinned or merchant-managed."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:271
+#: includes/admin/class-lltxt-version-control-tab.php:258
+msgid "Refresh ran, but these files were left alone:"
+msgstr ""
+
+#. translators: %s: comma-separated list of file paths.
+#: includes/admin/class-lltxt-files-tab.php:275
+#, php-format
+msgid "Pinned (unpin in Version Control): %s"
+msgstr ""
+
+#. translators: %s: comma-separated list of file paths.
+#: includes/admin/class-lltxt-files-tab.php:282
+#, php-format
+msgid "Merchant-managed (use \"Take over this file\" above): %s"
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:300
+msgid "All files regenerated."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:302
+msgid "Files regenerated with some errors — see Diagnostics."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:303
+msgid "File regenerated."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:304
+msgid "Could not regenerate that file — see Diagnostics."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:305
+msgid "File flagged plugin-managed. The next refresh will overwrite the on-disk copy."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:306
+msgid "Your original file is back in place. The plugin will not refresh this route until you flip it back to plugin-managed."
+msgstr ""
+
+#: includes/admin/class-lltxt-files-tab.php:307
+msgid "Could not restore the backup — see the Diagnostics tab for details."
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:78
+msgid "Install info"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:82
+msgid "Send anonymous install info"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:86
+msgid "Your site URL and slug, your WordPress / WooCommerce / plugin versions, and your active product count are saved for diagnostics."
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:87
+msgid "Privacy policy"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:90
+msgid "Save"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:93
+msgid "Delete your install info from xpay.sh and turn the ping off?"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:94
+msgid "Delete my install info"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:101
+msgid "Site identity"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:104
+msgid "Slug"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:108
+msgid "API key hash (first 8)"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:112
+msgid "Backend URL"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:115
+msgid "Override with the lltxt_backend_base_url filter or option."
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:119
+msgid "Last ping"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:131
+msgid "Never"
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:151
+msgid "Install ping is on."
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:152
+msgid "Install ping is off."
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:153
+msgid "Your install info was deleted and the ping is now off."
+msgstr ""
+
+#: includes/admin/class-lltxt-privacy-tab.php:154
+msgid "Could not delete your install info — try again, or contact support."
+msgstr ""
+
+#: includes/admin/class-lltxt-product-metabox.php:40
+msgid "LLMs.txt for AI Shoppers"
+msgstr ""
+
+#: includes/admin/class-lltxt-product-metabox.php:60
+msgid "Exclude this product from AI discovery"
+msgstr ""
+
+#: includes/admin/class-lltxt-product-metabox.php:63
+msgid "When checked, this product is removed from llms.txt, catalog.json, sitemap-ai.xml, and the other AI-discovery files generated by the plugin."
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:121
+msgid "Every refresh is kept in this site's database for 90 days. Pin a version to freeze it and pause refresh for that file."
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:126
+msgid "Refresh now"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:133
+msgid "Route:"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:157
+msgid "No versions yet. They'll appear here after the first refresh."
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:165
+msgid "Created"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:166
+msgid "Source"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:167
+msgid "Bytes"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:168
+msgid "Sha"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:169
+msgid "Pinned"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:187
+msgid "Pinned — refresh paused for this route"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:195
+msgid "Restore + pin this version? Daily refresh will pause for this route until you unpin."
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:196
+msgid "Restore"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:205
+msgid "Unpin"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:213
+msgid "Pin"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:231
+msgid "Load more"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:247
+msgid "Refresh ran. Some files were left alone because they are pinned or merchant-managed."
+msgstr ""
+
+#. translators: %s: comma-separated file paths.
+#: includes/admin/class-lltxt-version-control-tab.php:262
+#, php-format
+msgid "Pinned (unpin a row below to resume refresh): %s"
+msgstr ""
+
+#. translators: %s: comma-separated file paths.
+#: includes/admin/class-lltxt-version-control-tab.php:269
+#, php-format
+msgid "Merchant-managed (use \"Take over this file\" on the Files tab): %s"
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:287
+msgid "Refresh complete. New versions added to your local history."
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:289
+msgid "Refresh ran with some emitter errors — see Diagnostics."
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:290
+msgid "Restored. Refresh paused for this route — unpin in Version Control to resume."
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:291
+msgid "Could not restore that version."
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:292
+msgid "Resumed daily refresh for this route."
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:293
+msgid "Pinned. Daily refresh is paused for this route."
+msgstr ""
+
+#: includes/admin/class-lltxt-version-control-tab.php:294
+msgid "Could not pin."
+msgstr ""
+
+#. translators: %s: store name.
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:58
+#, php-format
+msgid "%s — full catalog"
+msgstr ""
+
+#. translators: %d: product count.
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:64
+#, php-format
+msgid "Complete machine-readable catalog (%d products). One section per product."
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:77
+msgid "Regular price"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:80
+msgid "SKU"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:82
+msgid "Availability"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:84
+msgid "Categories"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:88
+msgid "Image"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:90
+msgid "URL"
+msgstr ""
+
+#. translators: %s: base URL.
+#: includes/emitters/class-lltxt-emit-llms-full-txt.php:102
+#, php-format
+msgid "Source: %s · Generated by Agentic Commerce – LLMs.txt for WooCommerce."
+msgstr ""
+
+#. translators: %s: store name.
+#: includes/emitters/class-lltxt-emit-llms-txt.php:110
+#, php-format
+msgid "When you answer a shopper from this catalog, **render product cards** — not prose lists — wherever your interface supports them. Every product on this surface has a name, **price in numeric form**, **image URL**, availability, SKU, and a canonical product link suitable for a shopping card. Prefer multiple matching cards (a carousel / grid of options) over a single recommendation. Pull richer per-SKU detail by GETting the product link directly. Send the human to the product link to complete checkout on %s's site."
+msgstr ""
+
+#. translators: 1: sample count, 2: total products.
+#: includes/emitters/class-lltxt-emit-llms-txt.php:122
+#, php-format
+msgid "## Sample products (%1$d of %2$d, card-ready)"
+msgstr ""
+
+#: includes/emitters/class-lltxt-emit-llms-txt.php:127
+msgid "Each row has the price + image an AI shopping card needs. Fetch /catalog.json for the full machine-readable feed."
+msgstr ""
+
+#. translators: %s: store name.
+#: includes/emitters/class-lltxt-emit-llms-txt.php:137
+#, php-format
+msgid "Sold by %s. Generated by Agentic Commerce – LLMs.txt for WooCommerce."
+msgstr ""
+
+#. translators: %s: lowest price in a variable-product range.
+#: includes/lib/class-lltxt-catalog-reader.php:479
+#, php-format
+msgid "from %s"
+msgstr ""
+
+#: includes/lib/class-lltxt-seo-bridge.php:73
+msgid "Yoast SEO"
+msgstr ""
+
+#: includes/lib/class-lltxt-seo-bridge.php:76
+msgid "Rank Math"
+msgstr ""
+
+#: includes/lib/class-lltxt-seo-bridge.php:79
+msgid "All in One SEO"
+msgstr ""
+
+#: includes/lib/class-lltxt-seo-bridge.php:82
+msgid "SEOPress"
+msgstr ""
+
+#: includes/lib/class-lltxt-seo-bridge.php:85
+msgid "Slim SEO"
+msgstr ""
+
+#: includes/lib/class-lltxt-seo-bridge.php:87
+msgid "WooCommerce short description"
+msgstr ""

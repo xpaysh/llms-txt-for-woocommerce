@@ -24,6 +24,9 @@ class Lltxt_Catalog_Tab {
 		if ( ! isset( $_POST['lltxt_catalog_save'] ) ) {
 			return;
 		}
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 		check_admin_referer( 'lltxt_catalog' );
 
 		$top_n = isset( $_POST['lltxt_top_n'] ) ? (int) $_POST['lltxt_top_n'] : 100;
@@ -62,7 +65,7 @@ class Lltxt_Catalog_Tab {
 	public static function render() {
 		$code = isset( $_GET['lltxt_notice'] ) ? sanitize_key( wp_unslash( $_GET['lltxt_notice'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( 'catalog_saved' === $code ) {
-			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Catalog settings saved. Regenerate files from the Files tab to apply.', 'llms-txt-for-woocommerce' ) . '</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Catalog settings saved. Regenerate files from the Files tab to apply.', 'agentic-commerce-llms-txt' ) . '</p></div>';
 		}
 
 		$cfg = get_option( 'lltxt_catalog_settings', array() );
@@ -75,10 +78,10 @@ class Lltxt_Catalog_Tab {
 		$cats = Lltxt_Catalog_Reader::get_categories();
 
 		$orderby_opts = array(
-			'total_sales' => __( 'Best selling (total sales)', 'llms-txt-for-woocommerce' ),
-			'date'        => __( 'Newest first', 'llms-txt-for-woocommerce' ),
-			'title'       => __( 'Title (A–Z)', 'llms-txt-for-woocommerce' ),
-			'price'       => __( 'Price', 'llms-txt-for-woocommerce' ),
+			'total_sales' => __( 'Best selling (total sales)', 'agentic-commerce-llms-txt' ),
+			'date'        => __( 'Newest first', 'agentic-commerce-llms-txt' ),
+			'title'       => __( 'Title (A–Z)', 'agentic-commerce-llms-txt' ),
+			'price'       => __( 'Price', 'agentic-commerce-llms-txt' ),
 		);
 		?>
 		<form method="post">
@@ -86,16 +89,16 @@ class Lltxt_Catalog_Tab {
 			<table class="form-table" role="presentation">
 				<tbody>
 					<tr>
-						<th scope="row"><label for="lltxt_top_n"><?php esc_html_e( 'Products to surface (top N)', 'llms-txt-for-woocommerce' ); ?></label></th>
+						<th scope="row"><label for="lltxt_top_n"><?php esc_html_e( 'Products to surface (top N)', 'agentic-commerce-llms-txt' ); ?></label></th>
 						<td>
 							<input type="range" id="lltxt_top_n" name="lltxt_top_n" min="10" max="500" step="10" value="<?php echo esc_attr( $top_n ); ?>"
 								oninput="document.getElementById('lltxt_top_n_val').textContent=this.value;" />
 							<output id="lltxt_top_n_val"><?php echo esc_html( $top_n ); ?></output>
-							<p class="description"><?php esc_html_e( 'How many products to pull for the sample tables and feeds (10–500). Default 100.', 'llms-txt-for-woocommerce' ); ?></p>
+							<p class="description"><?php esc_html_e( 'How many products to pull for the sample tables and feeds (10–500). Default 100.', 'agentic-commerce-llms-txt' ); ?></p>
 						</td>
 					</tr>
 					<tr>
-						<th scope="row"><label for="lltxt_orderby"><?php esc_html_e( 'Ordering', 'llms-txt-for-woocommerce' ); ?></label></th>
+						<th scope="row"><label for="lltxt_orderby"><?php esc_html_e( 'Ordering', 'agentic-commerce-llms-txt' ); ?></label></th>
 						<td>
 							<select id="lltxt_orderby" name="lltxt_orderby">
 								<?php foreach ( $orderby_opts as $val => $label ) : ?>
@@ -105,7 +108,7 @@ class Lltxt_Catalog_Tab {
 						</td>
 					</tr>
 					<tr>
-						<th scope="row"><label for="lltxt_include_cats"><?php esc_html_e( 'Only include categories', 'llms-txt-for-woocommerce' ); ?></label></th>
+						<th scope="row"><label for="lltxt_include_cats"><?php esc_html_e( 'Only include categories', 'agentic-commerce-llms-txt' ); ?></label></th>
 						<td>
 							<select id="lltxt_include_cats" name="lltxt_include_cats[]" multiple size="6" style="min-width:280px;">
 								<?php foreach ( $cats as $c ) : ?>
@@ -114,11 +117,11 @@ class Lltxt_Catalog_Tab {
 									</option>
 								<?php endforeach; ?>
 							</select>
-							<p class="description"><?php esc_html_e( 'Leave empty to include all categories.', 'llms-txt-for-woocommerce' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Leave empty to include all categories.', 'agentic-commerce-llms-txt' ); ?></p>
 						</td>
 					</tr>
 					<tr>
-						<th scope="row"><label for="lltxt_exclude_cats"><?php esc_html_e( 'Exclude categories', 'llms-txt-for-woocommerce' ); ?></label></th>
+						<th scope="row"><label for="lltxt_exclude_cats"><?php esc_html_e( 'Exclude categories', 'agentic-commerce-llms-txt' ); ?></label></th>
 						<td>
 							<select id="lltxt_exclude_cats" name="lltxt_exclude_cats[]" multiple size="6" style="min-width:280px;">
 								<?php foreach ( $cats as $c ) : ?>
@@ -127,19 +130,19 @@ class Lltxt_Catalog_Tab {
 									</option>
 								<?php endforeach; ?>
 							</select>
-							<p class="description"><?php esc_html_e( 'Products in these categories are removed from the surfaced set.', 'llms-txt-for-woocommerce' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Products in these categories are removed from the surfaced set.', 'agentic-commerce-llms-txt' ); ?></p>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			<input type="hidden" name="lltxt_catalog_save" value="1" />
-			<?php submit_button( __( 'Save Catalog Settings', 'llms-txt-for-woocommerce' ) ); ?>
+			<?php submit_button( __( 'Save Catalog Settings', 'agentic-commerce-llms-txt' ) ); ?>
 		</form>
 		<?php
 		if ( class_exists( 'Lltxt_Seo_Bridge' ) ) {
 			$src = Lltxt_Seo_Bridge::detected_source();
 			echo '<p class="description" style="margin-top:12px;"><strong>'
-				. esc_html__( 'SEO source for product descriptions:', 'llms-txt-for-woocommerce' )
+				. esc_html__( 'SEO source for product descriptions:', 'agentic-commerce-llms-txt' )
 				. '</strong> ' . esc_html( $src ) . '</p>';
 		}
 	}

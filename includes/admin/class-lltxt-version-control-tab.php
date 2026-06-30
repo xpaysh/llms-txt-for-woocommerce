@@ -118,19 +118,19 @@ class Lltxt_Version_Control_Tab {
 		}
 		?>
 		<p>
-			<?php esc_html_e( 'Every refresh is kept in this site\'s database for 90 days. Pin a version to freeze it and pause refresh for that file.', 'llms-txt-for-woocommerce' ); ?>
+			<?php esc_html_e( 'Every refresh is kept in this site\'s database for 90 days. Pin a version to freeze it and pause refresh for that file.', 'agentic-commerce-llms-txt' ); ?>
 			<form method="post" style="display:inline; margin-left:1em;">
 				<?php wp_nonce_field( 'lltxt_vc' ); ?>
 				<input type="hidden" name="lltxt_vc_action" value="sync_now" />
 				<input type="hidden" name="lltxt_route" value="<?php echo esc_attr( $route ); ?>" />
-				<button type="submit" class="button"><?php esc_html_e( 'Refresh now', 'llms-txt-for-woocommerce' ); ?></button>
+				<button type="submit" class="button"><?php esc_html_e( 'Refresh now', 'agentic-commerce-llms-txt' ); ?></button>
 			</form>
 		</p>
 
 		<form method="get" style="margin:1em 0;">
 			<input type="hidden" name="page" value="<?php echo esc_attr( Lltxt_Admin_Page::SLUG ); ?>" />
 			<input type="hidden" name="tab" value="version-control" />
-			<label for="lltxt-vc-route"><?php esc_html_e( 'Route:', 'llms-txt-for-woocommerce' ); ?></label>
+			<label for="lltxt-vc-route"><?php esc_html_e( 'Route:', 'agentic-commerce-llms-txt' ); ?></label>
 			<select id="lltxt-vc-route" name="route" onchange="this.form.submit()">
 				<?php foreach ( $routes as $r ) : ?>
 					<option value="<?php echo esc_attr( $r ); ?>" <?php selected( $route, $r ); ?>><?php echo esc_html( '/' . $r ); ?></option>
@@ -154,7 +154,7 @@ class Lltxt_Version_Control_Tab {
 		$rows   = isset( $page['rows'] ) ? $page['rows'] : array();
 
 		if ( empty( $rows ) ) {
-			echo '<p><em>' . esc_html__( 'No versions yet. They\'ll appear here after the first refresh.', 'llms-txt-for-woocommerce' ) . '</em></p>';
+			echo '<p><em>' . esc_html__( 'No versions yet. They\'ll appear here after the first refresh.', 'agentic-commerce-llms-txt' ) . '</em></p>';
 			return;
 		}
 		$local_mode = Lltxt_Cache::get_mode( $route );
@@ -162,12 +162,12 @@ class Lltxt_Version_Control_Tab {
 		<table class="widefat striped">
 			<thead>
 				<tr>
-					<th><?php esc_html_e( 'Created', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Source', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Bytes', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Sha', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Pinned', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Actions', 'llms-txt-for-woocommerce' ); ?></th>
+					<th><?php esc_html_e( 'Created', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Source', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Bytes', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Sha', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Pinned', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Actions', 'agentic-commerce-llms-txt' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -184,7 +184,7 @@ class Lltxt_Version_Control_Tab {
 					<td><?php echo esc_html( $source ); ?></td>
 					<td><?php echo esc_html( (string) $bytes ); ?></td>
 					<td><code><?php echo esc_html( $sha ); ?></code></td>
-					<td><?php if ( $pinned ) { echo esc_html__( 'Pinned — refresh paused for this route', 'llms-txt-for-woocommerce' ); } ?></td>
+					<td><?php if ( $pinned ) { echo esc_html__( 'Pinned — refresh paused for this route', 'agentic-commerce-llms-txt' ); } ?></td>
 					<td>
 						<form method="post" style="display:inline;">
 							<?php wp_nonce_field( 'lltxt_vc' ); ?>
@@ -192,8 +192,8 @@ class Lltxt_Version_Control_Tab {
 							<input type="hidden" name="lltxt_route" value="<?php echo esc_attr( $route ); ?>" />
 							<input type="hidden" name="lltxt_version_id" value="<?php echo esc_attr( (string) $id ); ?>" />
 							<button type="submit" class="button button-small"
-								onclick="return confirm('<?php echo esc_js( __( 'Restore + pin this version? Daily refresh will pause for this route until you unpin.', 'llms-txt-for-woocommerce' ) ); ?>');">
-								<?php esc_html_e( 'Restore', 'llms-txt-for-woocommerce' ); ?>
+								onclick="return confirm('<?php echo esc_js( __( 'Restore + pin this version? Daily refresh will pause for this route until you unpin.', 'agentic-commerce-llms-txt' ) ); ?>');">
+								<?php esc_html_e( 'Restore', 'agentic-commerce-llms-txt' ); ?>
 							</button>
 						</form>
 						<?php if ( $pinned || Lltxt_Cache::MODE_PINNED === $local_mode ) : ?>
@@ -202,7 +202,7 @@ class Lltxt_Version_Control_Tab {
 								<input type="hidden" name="lltxt_vc_action" value="unpin" />
 								<input type="hidden" name="lltxt_route" value="<?php echo esc_attr( $route ); ?>" />
 								<input type="hidden" name="lltxt_version_id" value="<?php echo esc_attr( (string) $id ); ?>" />
-								<button type="submit" class="button button-small"><?php esc_html_e( 'Unpin', 'llms-txt-for-woocommerce' ); ?></button>
+								<button type="submit" class="button button-small"><?php esc_html_e( 'Unpin', 'agentic-commerce-llms-txt' ); ?></button>
 							</form>
 						<?php else : ?>
 							<form method="post" style="display:inline;">
@@ -210,7 +210,7 @@ class Lltxt_Version_Control_Tab {
 								<input type="hidden" name="lltxt_vc_action" value="pin" />
 								<input type="hidden" name="lltxt_route" value="<?php echo esc_attr( $route ); ?>" />
 								<input type="hidden" name="lltxt_version_id" value="<?php echo esc_attr( (string) $id ); ?>" />
-								<button type="submit" class="button button-small"><?php esc_html_e( 'Pin', 'llms-txt-for-woocommerce' ); ?></button>
+								<button type="submit" class="button button-small"><?php esc_html_e( 'Pin', 'agentic-commerce-llms-txt' ); ?></button>
 							</form>
 						<?php endif; ?>
 					</td>
@@ -228,7 +228,7 @@ class Lltxt_Version_Control_Tab {
 						),
 						admin_url( 'options-general.php?page=' . Lltxt_Admin_Page::SLUG . '&tab=version-control' )
 					)
-				); ?>"><?php esc_html_e( 'Load more', 'llms-txt-for-woocommerce' ); ?></a>
+				); ?>"><?php esc_html_e( 'Load more', 'agentic-commerce-llms-txt' ); ?></a>
 			</p>
 		<?php endif; ?>
 		<?php
@@ -244,7 +244,7 @@ class Lltxt_Version_Control_Tab {
 		$skipped = get_transient( 'lltxt_last_skipped_vc' );
 		delete_transient( 'lltxt_last_skipped_vc' );
 		if ( ! is_array( $skipped ) || empty( $skipped ) ) {
-			return __( 'Refresh ran. Some files were left alone because they are pinned or merchant-managed.', 'llms-txt-for-woocommerce' );
+			return __( 'Refresh ran. Some files were left alone because they are pinned or merchant-managed.', 'agentic-commerce-llms-txt' );
 		}
 		$pinned   = array();
 		$merchant = array();
@@ -255,18 +255,18 @@ class Lltxt_Version_Control_Tab {
 				$merchant[] = '/' . $path;
 			}
 		}
-		$lines = array( __( 'Refresh ran, but these files were left alone:', 'llms-txt-for-woocommerce' ) );
+		$lines = array( __( 'Refresh ran, but these files were left alone:', 'agentic-commerce-llms-txt' ) );
 		if ( $pinned ) {
 			$lines[] = sprintf(
 				/* translators: %s: comma-separated file paths. */
-				__( 'Pinned (unpin a row below to resume refresh): %s', 'llms-txt-for-woocommerce' ),
+				__( 'Pinned (unpin a row below to resume refresh): %s', 'agentic-commerce-llms-txt' ),
 				implode( ', ', $pinned )
 			);
 		}
 		if ( $merchant ) {
 			$lines[] = sprintf(
 				/* translators: %s: comma-separated file paths. */
-				__( 'Merchant-managed (use "Take over this file" on the Files tab): %s', 'llms-txt-for-woocommerce' ),
+				__( 'Merchant-managed (use "Take over this file" on the Files tab): %s', 'agentic-commerce-llms-txt' ),
 				implode( ', ', $merchant )
 			);
 		}
@@ -284,14 +284,14 @@ class Lltxt_Version_Control_Tab {
 			return;
 		}
 		$map = array(
-			'vc_sync_ok'      => array( 'success', __( 'Refresh complete. New versions added to your local history.', 'llms-txt-for-woocommerce' ) ),
+			'vc_sync_ok'      => array( 'success', __( 'Refresh complete. New versions added to your local history.', 'agentic-commerce-llms-txt' ) ),
 			'vc_sync_skipped' => array( 'warning', self::vc_skip_notice_text() ),
-			'vc_sync_partial' => array( 'warning', __( 'Refresh ran with some emitter errors — see Diagnostics.', 'llms-txt-for-woocommerce' ) ),
-			'vc_restored'     => array( 'success', __( 'Restored. Refresh paused for this route — unpin in Version Control to resume.', 'llms-txt-for-woocommerce' ) ),
-			'vc_restore_err'  => array( 'error',   __( 'Could not restore that version.', 'llms-txt-for-woocommerce' ) ),
-			'vc_unpinned'     => array( 'success', __( 'Resumed daily refresh for this route.', 'llms-txt-for-woocommerce' ) ),
-			'vc_pinned'       => array( 'success', __( 'Pinned. Daily refresh is paused for this route.', 'llms-txt-for-woocommerce' ) ),
-			'vc_pin_err'      => array( 'error',   __( 'Could not pin.', 'llms-txt-for-woocommerce' ) ),
+			'vc_sync_partial' => array( 'warning', __( 'Refresh ran with some emitter errors — see Diagnostics.', 'agentic-commerce-llms-txt' ) ),
+			'vc_restored'     => array( 'success', __( 'Restored. Refresh paused for this route — unpin in Version Control to resume.', 'agentic-commerce-llms-txt' ) ),
+			'vc_restore_err'  => array( 'error',   __( 'Could not restore that version.', 'agentic-commerce-llms-txt' ) ),
+			'vc_unpinned'     => array( 'success', __( 'Resumed daily refresh for this route.', 'agentic-commerce-llms-txt' ) ),
+			'vc_pinned'       => array( 'success', __( 'Pinned. Daily refresh is paused for this route.', 'agentic-commerce-llms-txt' ) ),
+			'vc_pin_err'      => array( 'error',   __( 'Could not pin.', 'agentic-commerce-llms-txt' ) ),
 		);
 		if ( ! isset( $map[ $code ] ) ) {
 			return;

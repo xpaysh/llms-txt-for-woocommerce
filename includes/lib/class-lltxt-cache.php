@@ -310,9 +310,10 @@ class Lltxt_Cache {
 		}
 		$bytes = (int) $result;
 
-		// Flywheel's webroot is the sibling `www/` (not ABSPATH). If that layout is
-		// detected, mirror the file there so the public URL actually serves it.
-		self::maybe_mirror_to_flywheel_www( $relative_path, $content );
+		// If the host serves the site from a webroot other than ABSPATH
+		// (e.g. Flywheel uses `dirname(ABSPATH)/www/`), mirror the file
+		// there so the public URL actually serves it. Filterable.
+		self::maybe_mirror_to_alt_webroot( $relative_path, $content );
 
 		self::record_timestamp( $relative_path, time(), $bytes );
 		return true;
@@ -386,25 +387,49 @@ class Lltxt_Cache {
 	}
 
 	/**
-	 * Flywheel hosts the webroot at `dirname(ABSPATH)/www/`. Mirror writes there
-	 * so /llms.txt actually resolves — fixed by ryhowa 8.2.8 upstream.
+	 * Mirror writes to an alternate webroot if the host serves the site from
+	 * a directory other than ABSPATH. The path can be overridden via the
+	 * `lltxt_alt_webroot` filter for non-standard hosting layouts.
 	 *
 	 * @param string $relative_path Relative path.
 	 * @param string $content       Body to mirror.
 	 * @return void
 	 */
-	private static function maybe_mirror_to_flywheel_www( $relative_path, $content ) {
-		$candidate = dirname( untrailingslashit( ABSPATH ) ) . '/www/';
-		if ( ! is_dir( $candidate ) ) {
+	private static function maybe_mirror_to_alt_webroot( $relative_path, $content ) {
+		/**
+		 * Filter the alternate webroot the plugin should mirror generated files to.
+		 *
+		 * Return an absolute path with trailing slash, or an empty string to disable
+		 * mirroring. Auto-detected for Flywheel-style layouts where a `www/` sibling
+		 * of ABSPATH exists; empty on standard WordPress installations.
+		 *
+		 * @param string $webroot Auto-detected alternate webroot, or empty string.
+		 */
+		$candidate = apply_filters( 'lltxt_alt_webroot', self::detect_alt_webroot() );
+		if ( empty( $candidate ) || ! is_string( $candidate ) || ! is_dir( $candidate ) ) {
 			return;
 		}
-		$mirror = $candidate . ltrim( $relative_path, '/' );
+		$mirror = trailingslashit( $candidate ) . ltrim( $relative_path, '/' );
 		$mdir   = dirname( $mirror );
 		if ( ! wp_mkdir_p( $mdir ) ) {
 			return;
 		}
-		// phpcs:ignore WordPress.WP.AlternativeFunctions, PluginCheck.CodeAnalysis.WriteFile.ABSPATHDetected -- Flywheel mirror write to the host's actual webroot (outside ABSPATH); plugin's whole purpose is serving llms.txt at the site root.
+		// phpcs:ignore WordPress.WP.AlternativeFunctions, PluginCheck.CodeAnalysis.WriteFile.ABSPATHDetected -- mirror write to the host's actual webroot (outside ABSPATH); plugin's whole purpose is serving llms.txt at the site root.
 		@file_put_contents( $mirror, $content, LOCK_EX );
+	}
+
+	/**
+	 * Default alternate webroot — empty (mirror disabled). Hosts that serve
+	 * the site from a directory other than ABSPATH can opt in by setting
+	 * the `lltxt_alt_webroot` option in `wp_options`, or by returning that
+	 * absolute path from the `lltxt_alt_webroot` filter. No host-specific
+	 * paths are hardcoded.
+	 *
+	 * @return string
+	 */
+	private static function detect_alt_webroot() {
+		$opt = get_option( 'lltxt_alt_webroot', '' );
+		return is_string( $opt ) ? $opt : '';
 	}
 
 	/**

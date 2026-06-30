@@ -51,11 +51,11 @@ class Lltxt_Admin_Page {
 	 * @return void
 	 */
 	public static function menu() {
-		// Use the full "LLMs.txt for WooCommerce" label so the Settings submenu
+		// Use the full "Agentic Commerce – LLMs.txt for WooCommerce" label so the Settings submenu
 		// stays distinguishable if a generic LLMs.txt plugin is also active.
 		add_options_page(
-			__( 'LLMs.txt for WooCommerce', 'llms-txt-for-woocommerce' ),
-			__( 'LLMs.txt for WooCommerce', 'llms-txt-for-woocommerce' ),
+			__( 'Agentic Commerce – LLMs.txt for WooCommerce', 'agentic-commerce-llms-txt' ),
+			__( 'Agentic Commerce – LLMs.txt for WooCommerce', 'agentic-commerce-llms-txt' ),
 			'manage_options',
 			self::SLUG,
 			array( __CLASS__, 'render' )
@@ -70,7 +70,7 @@ class Lltxt_Admin_Page {
 	 */
 	public static function action_links( $links ) {
 		$url   = admin_url( 'options-general.php?page=' . self::SLUG );
-		$label = esc_html__( 'Settings', 'llms-txt-for-woocommerce' );
+		$label = esc_html__( 'Settings', 'agentic-commerce-llms-txt' );
 		array_unshift( $links, '<a href="' . esc_url( $url ) . '">' . $label . '</a>' );
 		return $links;
 	}
@@ -113,16 +113,16 @@ class Lltxt_Admin_Page {
 	 */
 	public static function render() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have permission to access this page.', 'llms-txt-for-woocommerce' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'agentic-commerce-llms-txt' ) );
 		}
 		$tabs    = self::tabs();
 		$current = self::current_tab();
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'LLMs.txt for WooCommerce', 'llms-txt-for-woocommerce' ); ?></h1>
+			<h1><?php esc_html_e( 'Agentic Commerce – LLMs.txt for WooCommerce', 'agentic-commerce-llms-txt' ); ?></h1>
 			<?php if ( ! Lltxt_Catalog_Reader::wc_ready() ) : ?>
 				<div class="notice notice-warning"><p>
-					<?php esc_html_e( 'WooCommerce is not active. The discovery files will be generated, but product data will be empty until WooCommerce is enabled.', 'llms-txt-for-woocommerce' ); ?>
+					<?php esc_html_e( 'WooCommerce is not active. The discovery files will be generated, but product data will be empty until WooCommerce is enabled.', 'agentic-commerce-llms-txt' ); ?>
 				</p></div>
 			<?php endif; ?>
 			<h2 class="nav-tab-wrapper">

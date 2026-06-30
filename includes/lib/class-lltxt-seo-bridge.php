@@ -70,21 +70,21 @@ class Lltxt_Seo_Bridge {
 	public static function detected_source( $post_id = 0 ) {
 		// Active plugin probe (independent of any particular post).
 		if ( defined( 'WPSEO_VERSION' ) || class_exists( 'WPSEO_Options' ) ) {
-			return __( 'Yoast SEO', 'llms-txt-for-woocommerce' );
+			return __( 'Yoast SEO', 'agentic-commerce-llms-txt' );
 		}
 		if ( class_exists( 'RankMath' ) || defined( 'RANK_MATH_VERSION' ) ) {
-			return __( 'Rank Math', 'llms-txt-for-woocommerce' );
+			return __( 'Rank Math', 'agentic-commerce-llms-txt' );
 		}
 		if ( function_exists( 'aioseo' ) || defined( 'AIOSEO_VERSION' ) ) {
-			return __( 'All in One SEO', 'llms-txt-for-woocommerce' );
+			return __( 'All in One SEO', 'agentic-commerce-llms-txt' );
 		}
 		if ( defined( 'SEOPRESS_VERSION' ) ) {
-			return __( 'SEOPress', 'llms-txt-for-woocommerce' );
+			return __( 'SEOPress', 'agentic-commerce-llms-txt' );
 		}
 		if ( defined( 'SLIM_SEO_VERSION' ) || class_exists( 'SlimSEO\\Plugin' ) ) {
-			return __( 'Slim SEO', 'llms-txt-for-woocommerce' );
+			return __( 'Slim SEO', 'agentic-commerce-llms-txt' );
 		}
-		return __( 'WooCommerce short description', 'llms-txt-for-woocommerce' );
+		return __( 'WooCommerce short description', 'agentic-commerce-llms-txt' );
 	}
 
 	/**

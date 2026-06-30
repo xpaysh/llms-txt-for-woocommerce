@@ -197,18 +197,10 @@ final class Lltxt_Plugin {
 			);
 		}
 
-		// Install-ping master toggle: default ON.
-		if ( false === get_option( Lltxt_Install_Ping::OPT_ENABLED, false ) ) {
-			add_option( Lltxt_Install_Ping::OPT_ENABLED, 1, '', false );
-		}
-
-		// Bootstrap api_key once.
-		if ( false === get_option( Lltxt_Install_Ping::OPT_API_KEY, false ) ) {
-			add_option( Lltxt_Install_Ping::OPT_API_KEY, wp_generate_password( 64, false, false ), '', false );
-		}
-
-		// Fire the initial install ping.
-		Lltxt_Install_Ping::ping( 'activate' );
+		// Install ping is opt-in. We do not seed OPT_ENABLED, do not generate
+		// an api_key, and do not fire any ping on activation. Both happen
+		// lazily only after the merchant turns the toggle on from
+		// Settings → Agentic Commerce → Privacy.
 	}
 
 	/**
@@ -234,15 +226,19 @@ final class Lltxt_Plugin {
 		// non-standard webroot layouts, and CDN-edge bodies. We're still
 		// inside our activate() callback so our own rewrite rules are NOT
 		// yet flushed to the cache → the request hits the prior handler.
-		$url  = Lltxt_Cache::get_url( $rel );
-		$resp = wp_remote_get(
+		$url        = Lltxt_Cache::get_url( $rel );
+		$host       = wp_parse_url( $url, PHP_URL_HOST );
+		$is_local   = in_array( $host, array( 'localhost', '127.0.0.1', '::1' ), true );
+		$resp       = wp_remote_get(
 			$url,
 			array(
 				'timeout'     => 5,
 				'redirection' => 0,
-				'sslverify'   => false, // local instances often have self-signed certs
+				// Only skip SSL verification for loopback hosts that commonly
+				// use self-signed certs. Public hosts must verify normally.
+				'sslverify'   => ! $is_local,
 				'headers'     => array(
-					'User-Agent' => 'LLMs.txt-for-WooCommerce/preflight',
+					'User-Agent' => 'AgenticCommerceLlmsTxt/preflight',
 					'Accept'     => 'text/plain, */*',
 				),
 			)

@@ -28,12 +28,12 @@ class Lltxt_Install_Ping {
 	const DEFAULT_BASE_URL = 'https://llmstxt-api.xpay.sh';
 
 	/**
-	 * Master toggle. ON by default.
+	 * Master toggle. OFF by default — install ping is strictly opt-in.
 	 *
 	 * @return bool
 	 */
 	public static function is_enabled() {
-		return (int) get_option( self::OPT_ENABLED, 1 ) === 1;
+		return (int) get_option( self::OPT_ENABLED, 0 ) === 1;
 	}
 
 	/**
@@ -178,6 +178,13 @@ class Lltxt_Install_Ping {
 	 */
 	public static function delete_install() {
 		if ( ! self::is_enabled() ) {
+			return null;
+		}
+		// If no api_key has ever been generated, this install has never sent
+		// anything to the backend — there is nothing to delete. Short-circuit
+		// here so we do NOT generate a persistent identifier purely for a
+		// delete request.
+		if ( '' === (string) get_option( self::OPT_API_KEY, '' ) ) {
 			return null;
 		}
 		$slug = self::slug();

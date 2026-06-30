@@ -45,7 +45,7 @@ class Lltxt_Diagnostics_Tab {
 			$preview = 'llms.txt';
 		}
 		?>
-		<h2><?php esc_html_e( 'File preview', 'llms-txt-for-woocommerce' ); ?></h2>
+		<h2><?php esc_html_e( 'File preview', 'agentic-commerce-llms-txt' ); ?></h2>
 		<form method="get">
 			<input type="hidden" name="page" value="<?php echo esc_attr( Lltxt_Admin_Page::SLUG ); ?>" />
 			<input type="hidden" name="tab" value="diagnostics" />
@@ -54,7 +54,7 @@ class Lltxt_Diagnostics_Tab {
 					<option value="<?php echo esc_attr( $rel ); ?>" <?php selected( $preview, $rel ); ?>>/<?php echo esc_html( $rel ); ?></option>
 				<?php endforeach; ?>
 			</select>
-			<button type="submit" class="button"><?php esc_html_e( 'Preview', 'llms-txt-for-woocommerce' ); ?></button>
+			<button type="submit" class="button"><?php esc_html_e( 'Preview', 'agentic-commerce-llms-txt' ); ?></button>
 		</form>
 		<?php
 		$body = Lltxt_Cache::read( $preview );
@@ -68,7 +68,7 @@ class Lltxt_Diagnostics_Tab {
 				}
 			}
 		}
-		echo '<pre style="background:#fff;border:1px solid #ccd0d4;padding:1em;max-height:420px;overflow:auto;">' . esc_html( false === $body ? __( 'Not generated yet.', 'llms-txt-for-woocommerce' ) : $body ) . '</pre>';
+		echo '<pre style="background:#fff;border:1px solid #ccd0d4;padding:1em;max-height:420px;overflow:auto;">' . esc_html( false === $body ? __( 'Not generated yet.', 'agentic-commerce-llms-txt' ) : $body ) . '</pre>';
 	}
 
 	/**
@@ -79,17 +79,17 @@ class Lltxt_Diagnostics_Tab {
 	private static function render_log() {
 		$log = Lltxt_Refresh::get_log();
 		?>
-		<h2><?php esc_html_e( 'Refresh log', 'llms-txt-for-woocommerce' ); ?></h2>
+		<h2><?php esc_html_e( 'Refresh log', 'agentic-commerce-llms-txt' ); ?></h2>
 		<?php if ( empty( $log ) ) : ?>
-			<p><?php esc_html_e( 'No refreshes recorded yet.', 'llms-txt-for-woocommerce' ); ?></p>
+			<p><?php esc_html_e( 'No refreshes recorded yet.', 'agentic-commerce-llms-txt' ); ?></p>
 		<?php else : ?>
 			<table class="widefat striped">
 				<thead><tr>
-					<th><?php esc_html_e( 'When', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'OK', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Failed', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Duration', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Errors', 'llms-txt-for-woocommerce' ); ?></th>
+					<th><?php esc_html_e( 'When', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'OK', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Failed', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Duration', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Errors', 'agentic-commerce-llms-txt' ); ?></th>
 				</tr></thead>
 				<tbody>
 				<?php foreach ( $log as $entry ) : ?>

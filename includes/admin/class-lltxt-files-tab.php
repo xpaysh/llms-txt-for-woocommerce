@@ -24,6 +24,9 @@ class Lltxt_Files_Tab {
 		if ( ! isset( $_POST['lltxt_files_action'] ) ) {
 			return;
 		}
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 		check_admin_referer( 'lltxt_files' );
 
 		$action = sanitize_key( wp_unslash( $_POST['lltxt_files_action'] ) );
@@ -80,18 +83,18 @@ class Lltxt_Files_Tab {
 		self::notice();
 		$emitters = Lltxt_Plugin::emitter_classes();
 		?>
-		<p><?php esc_html_e( 'These files are generated locally on your server and served from your domain. Daily refresh runs via WP-Cron; you can also regenerate on demand below.', 'llms-txt-for-woocommerce' ); ?></p>
+		<p><?php esc_html_e( 'These files are generated locally on your server and served from your domain. Daily refresh runs via WP-Cron; you can also regenerate on demand below.', 'agentic-commerce-llms-txt' ); ?></p>
 		<form method="post" style="margin-bottom:1em;">
 			<?php wp_nonce_field( 'lltxt_files' ); ?>
 			<input type="hidden" name="lltxt_files_action" value="regen_all" />
-			<button type="submit" class="button button-primary"><?php esc_html_e( 'Regenerate All', 'llms-txt-for-woocommerce' ); ?></button>
+			<button type="submit" class="button button-primary"><?php esc_html_e( 'Regenerate All', 'agentic-commerce-llms-txt' ); ?></button>
 			<?php
 			$last = Lltxt_Refresh::last_refresh();
 			if ( $last ) {
 				echo ' <span class="description">' . esc_html(
 					sprintf(
 						/* translators: %s: human-readable time difference. */
-						__( 'Last full refresh: %s ago', 'llms-txt-for-woocommerce' ),
+						__( 'Last full refresh: %s ago', 'agentic-commerce-llms-txt' ),
 						human_time_diff( $last, time() )
 					)
 				) . '</span>';
@@ -101,11 +104,11 @@ class Lltxt_Files_Tab {
 		<table class="widefat striped">
 			<thead>
 				<tr>
-					<th><?php esc_html_e( 'File', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Path', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Last Generated', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Mode', 'llms-txt-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Actions', 'llms-txt-for-woocommerce' ); ?></th>
+					<th><?php esc_html_e( 'File', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Path', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Last Generated', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Mode', 'agentic-commerce-llms-txt' ); ?></th>
+					<th><?php esc_html_e( 'Actions', 'agentic-commerce-llms-txt' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -133,17 +136,17 @@ class Lltxt_Files_Tab {
 						<td>
 							<?php
 							if ( $hook_only ) {
-								esc_html_e( 'Served live (no static file)', 'llms-txt-for-woocommerce' );
+								esc_html_e( 'Served live (no static file)', 'agentic-commerce-llms-txt' );
 							} elseif ( $last_w ) {
 								echo esc_html(
 									sprintf(
 										/* translators: %s: time difference. */
-										__( '%s ago', 'llms-txt-for-woocommerce' ),
+										__( '%s ago', 'agentic-commerce-llms-txt' ),
 										human_time_diff( $last_w, time() )
 									)
 								);
 							} else {
-								esc_html_e( 'Not generated yet', 'llms-txt-for-woocommerce' );
+								esc_html_e( 'Not generated yet', 'agentic-commerce-llms-txt' );
 							}
 							?>
 						</td>
@@ -159,9 +162,9 @@ class Lltxt_Files_Tab {
 									Lltxt_Cache::MODE_PINNED   => '#0969da',
 								);
 								$labels = array(
-									Lltxt_Cache::MODE_PLUGIN   => __( 'plugin-managed', 'llms-txt-for-woocommerce' ),
-									Lltxt_Cache::MODE_MERCHANT => __( 'merchant-managed', 'llms-txt-for-woocommerce' ),
-									Lltxt_Cache::MODE_PINNED   => __( 'pinned', 'llms-txt-for-woocommerce' ),
+									Lltxt_Cache::MODE_PLUGIN   => __( 'plugin-managed', 'agentic-commerce-llms-txt' ),
+									Lltxt_Cache::MODE_MERCHANT => __( 'merchant-managed', 'agentic-commerce-llms-txt' ),
+									Lltxt_Cache::MODE_PINNED   => __( 'pinned', 'agentic-commerce-llms-txt' ),
 								);
 								printf(
 									'<span style="display:inline-block;padding:2px 8px;border:1px solid %s;border-radius:10px;color:%s;font-size:11px;">%s</span>',
@@ -181,17 +184,17 @@ class Lltxt_Files_Tab {
 									<?php wp_nonce_field( 'lltxt_files' ); ?>
 									<input type="hidden" name="lltxt_files_action" value="regen_one" />
 									<input type="hidden" name="lltxt_class" value="<?php echo esc_attr( $class ); ?>" />
-									<button type="submit" class="button button-small" <?php disabled( ! $regen_enabled ); ?>><?php esc_html_e( 'Regenerate', 'llms-txt-for-woocommerce' ); ?></button>
+									<button type="submit" class="button button-small" <?php disabled( ! $regen_enabled ); ?>><?php esc_html_e( 'Regenerate', 'agentic-commerce-llms-txt' ); ?></button>
 								</form>
-								<a class="button button-small" href="<?php echo esc_url( add_query_arg( array( 'page' => Lltxt_Admin_Page::SLUG, 'tab' => 'diagnostics', 'preview' => rawurlencode( $path ) ), admin_url( 'options-general.php' ) ) ); ?>"><?php esc_html_e( 'Preview', 'llms-txt-for-woocommerce' ); ?></a>
+								<a class="button button-small" href="<?php echo esc_url( add_query_arg( array( 'page' => Lltxt_Admin_Page::SLUG, 'tab' => 'diagnostics', 'preview' => rawurlencode( $path ) ), admin_url( 'options-general.php' ) ) ); ?>"><?php esc_html_e( 'Preview', 'agentic-commerce-llms-txt' ); ?></a>
 								<?php if ( Lltxt_Cache::MODE_MERCHANT === $mode ) : ?>
 									<form method="post" style="display:inline;">
 										<?php wp_nonce_field( 'lltxt_files' ); ?>
 										<input type="hidden" name="lltxt_files_action" value="take_over" />
 										<input type="hidden" name="lltxt_path" value="<?php echo esc_attr( $path ); ?>" />
 										<button type="submit" class="button button-small"
-											onclick="return confirm('<?php echo esc_js( __( 'Take over this file? The plugin will overwrite your existing file on the next refresh. Your original was already backed up to /wp-content/uploads/lltxt-backups/.', 'llms-txt-for-woocommerce' ) ); ?>');">
-											<?php esc_html_e( 'Take over this file', 'llms-txt-for-woocommerce' ); ?>
+											onclick="return confirm('<?php echo esc_js( __( 'Take over this file? The plugin will overwrite your existing file on the next refresh. Your original was already backed up to /wp-content/uploads/lltxt-backups/.', 'agentic-commerce-llms-txt' ) ); ?>');">
+											<?php esc_html_e( 'Take over this file', 'agentic-commerce-llms-txt' ); ?>
 										</button>
 									</form>
 								<?php endif; ?>
@@ -204,8 +207,8 @@ class Lltxt_Files_Tab {
 										<input type="hidden" name="lltxt_files_action" value="restore_backup" />
 										<input type="hidden" name="lltxt_path" value="<?php echo esc_attr( $path ); ?>" />
 										<button type="submit" class="button button-small"
-											onclick="return confirm('<?php echo esc_js( __( 'Restore your original file (the one in your webroot before this plugin was activated)? The plugin will stop refreshing this route until you flip it back.', 'llms-txt-for-woocommerce' ) ); ?>');">
-											<?php esc_html_e( 'Restore my version', 'llms-txt-for-woocommerce' ); ?>
+											onclick="return confirm('<?php echo esc_js( __( 'Restore your original file (the one in your webroot before this plugin was activated)? The plugin will stop refreshing this route until you flip it back.', 'agentic-commerce-llms-txt' ) ); ?>');">
+											<?php esc_html_e( 'Restore my version', 'agentic-commerce-llms-txt' ); ?>
 										</button>
 									</form>
 								<?php endif; ?>
@@ -254,7 +257,7 @@ class Lltxt_Files_Tab {
 		$skipped = get_transient( 'lltxt_last_skipped' );
 		delete_transient( 'lltxt_last_skipped' );
 		if ( ! is_array( $skipped ) || empty( $skipped ) ) {
-			return __( 'Some files were skipped because they are pinned or merchant-managed.', 'llms-txt-for-woocommerce' );
+			return __( 'Some files were skipped because they are pinned or merchant-managed.', 'agentic-commerce-llms-txt' );
 		}
 		$pinned   = array();
 		$merchant = array();
@@ -265,18 +268,18 @@ class Lltxt_Files_Tab {
 				$merchant[] = '/' . $path;
 			}
 		}
-		$lines = array( __( 'Refresh ran, but these files were left alone:', 'llms-txt-for-woocommerce' ) );
+		$lines = array( __( 'Refresh ran, but these files were left alone:', 'agentic-commerce-llms-txt' ) );
 		if ( $pinned ) {
 			$lines[] = sprintf(
 				/* translators: %s: comma-separated list of file paths. */
-				__( 'Pinned (unpin in Version Control): %s', 'llms-txt-for-woocommerce' ),
+				__( 'Pinned (unpin in Version Control): %s', 'agentic-commerce-llms-txt' ),
 				implode( ', ', $pinned )
 			);
 		}
 		if ( $merchant ) {
 			$lines[] = sprintf(
 				/* translators: %s: comma-separated list of file paths. */
-				__( 'Merchant-managed (use "Take over this file" above): %s', 'llms-txt-for-woocommerce' ),
+				__( 'Merchant-managed (use "Take over this file" above): %s', 'agentic-commerce-llms-txt' ),
 				implode( ', ', $merchant )
 			);
 		}
@@ -294,14 +297,14 @@ class Lltxt_Files_Tab {
 			return;
 		}
 		$map = array(
-			'regen_all_ok'      => array( 'success', __( 'All files regenerated.', 'llms-txt-for-woocommerce' ) ),
+			'regen_all_ok'      => array( 'success', __( 'All files regenerated.', 'agentic-commerce-llms-txt' ) ),
 			'regen_all_skipped' => array( 'warning', self::skip_notice_text() ),
-			'regen_partial'     => array( 'warning', __( 'Files regenerated with some errors — see Diagnostics.', 'llms-txt-for-woocommerce' ) ),
-			'regen_one_ok'  => array( 'success', __( 'File regenerated.', 'llms-txt-for-woocommerce' ) ),
-			'regen_one_err' => array( 'error', __( 'Could not regenerate that file — see Diagnostics.', 'llms-txt-for-woocommerce' ) ),
-			'take_over_ok'  => array( 'success', __( 'File flagged plugin-managed. The next refresh will overwrite the on-disk copy.', 'llms-txt-for-woocommerce' ) ),
-			'restore_ok'    => array( 'success', __( 'Your original file is back in place. The plugin will not refresh this route until you flip it back to plugin-managed.', 'llms-txt-for-woocommerce' ) ),
-			'restore_err'   => array( 'error',   __( 'Could not restore the backup — see the Diagnostics tab for details.', 'llms-txt-for-woocommerce' ) ),
+			'regen_partial'     => array( 'warning', __( 'Files regenerated with some errors — see Diagnostics.', 'agentic-commerce-llms-txt' ) ),
+			'regen_one_ok'  => array( 'success', __( 'File regenerated.', 'agentic-commerce-llms-txt' ) ),
+			'regen_one_err' => array( 'error', __( 'Could not regenerate that file — see Diagnostics.', 'agentic-commerce-llms-txt' ) ),
+			'take_over_ok'  => array( 'success', __( 'File flagged plugin-managed. The next refresh will overwrite the on-disk copy.', 'agentic-commerce-llms-txt' ) ),
+			'restore_ok'    => array( 'success', __( 'Your original file is back in place. The plugin will not refresh this route until you flip it back to plugin-managed.', 'agentic-commerce-llms-txt' ) ),
+			'restore_err'   => array( 'error',   __( 'Could not restore the backup — see the Diagnostics tab for details.', 'agentic-commerce-llms-txt' ) ),
 		);
 		if ( ! isset( $map[ $code ] ) ) {
 			return;

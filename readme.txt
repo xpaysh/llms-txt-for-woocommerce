@@ -1,106 +1,107 @@
-=== LLMs.txt for WooCommerce ===
-Contributors: xpay
-Tags: llms.txt, woocommerce, chatgpt, ai search, generative engine optimization
+=== Agentic Commerce – LLMs.txt for WooCommerce ===
+Contributors: xpaysh
+Tags: llms.txt, woocommerce, ai shopping agents, ai search, generative engine optimization
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
+Requires Plugins: woocommerce
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Get recommended by ChatGPT, Claude and Perplexity. Commerce-aware /llms.txt for your WooCommerce store — auto-refreshed, free forever.
+Commerce-aware /llms.txt for your WooCommerce store. Generates a machine-readable catalog AI shopping agents can read — auto-refreshed, free.
 
 == Description ==
 
-**A shopper asks ChatGPT: *"Where can I buy a waterproof bike light under $50?"***
+A shopper asks an AI assistant: *"Where can I buy a waterproof bike light under $50?"*
 
-If your store sells one, you want to be the answer. To stand a chance, ChatGPT, Claude, Perplexity and Google's AI Mode need a file called `/llms.txt` at your domain root — a clean, machine-readable summary of what you sell. Most WooCommerce stores don't have one yet, and the generic plugins that do are built around blog posts and pages. They have no idea what a product, a price, or a variation is.
+For an AI shopping agent to consider your store as an answer, it needs a machine-readable summary of what you sell. The emerging convention for this is a file called `/llms.txt` at your domain root.
 
-This plugin fixes that. In 30 seconds.
-
-**35 plugins on WordPress.org generate `/llms.txt`. One reads your catalog.**
+This plugin generates a commerce-aware `/llms.txt` and `/llms-full.txt` directly from your live WooCommerce catalog — including real prices, real images, real stock, and per-variation data — and refreshes them automatically when your catalog changes.
 
 = What you get =
 
-* **A `/llms.txt` file** built from your live WooCommerce catalog — top-selling products, real prices, real images, real links. The format AI shopping agents are converging on.
-* **A `/llms-full.txt` file** with your full catalog, one section per product, for AI agents that want everything in one fetch.
-* **Daily auto-refresh.** When you add products, change prices, or update stock, your files update themselves. No schedules to wire up. No buttons to press.
-* **Version history with one-click rollback** (stored locally — nothing leaves your site). Every refresh is kept so you can compare and restore. Pin a version when you've got it just right.
-* **Free forever.** No tier-gates. No upsells. No nags.
+* **A `/llms.txt` file** built from your live WooCommerce catalog — top products, prices, images, and links in the format AI shopping agents read.
+* **A `/llms-full.txt` file** with your full catalog, one section per product, for agents that want everything in one fetch.
+* **Daily auto-refresh.** When you add products, change prices, or update stock, your files update themselves. No schedules to wire up.
+* **Version history with one-click rollback.** Every refresh is stored locally on your site so you can compare and restore. Pin a version when you've got it just right.
+* **Free.** No tier-gates, no premium upsells.
 
-= Why this is built for WooCommerce, not WordPress =
+= Commerce-aware fields =
 
-Generic llms.txt plugins summarise your blog posts and pages. AI shopping agents need **products** — with a price and an image per item — to actually recommend you. Without that, your store turns into prose, and the agent recommends a competitor whose data is cleaner.
+This plugin reads your live WooCommerce catalog and emits product-shaped data:
 
-This plugin reads your live WooCommerce catalog and emits exactly what AI shoppers expect:
-
-* **Real prices**, including "from" prices for variable products (no $0 placeholders that drop you out of carousels)
+* **Real prices**, including "from" prices for variable products
 * **Real images**, including products with size/colour variations
-* **WooCommerce visibility honoured** — hidden, shop-only and search-only products stay out by default
-* **A per-product *Exclude from llms.txt* checkbox** on every product edit screen, in case you want to keep a specific item private
-* **Smart description fallback** — pulls from Yoast SEO, Rank Math, AIOSEO, SEOPress or Slim SEO if you've already written one; falls back to your WooCommerce short description otherwise
-* **Safe take-over of an existing `/llms.txt`** — if you already have one (from another plugin or hand-rolled), we back it up to `wp-content/uploads/lltxt-backups/` first, then take over. Restore your version any time from the Files tab — the backup is always preserved
+* **WooCommerce visibility honoured** — hidden, shop-only, and search-only products stay out by default
+* **Per-product *Exclude from llms.txt* checkbox** on every product edit screen
+* **Smart description fallback** — pulls from Yoast SEO, Rank Math, AIOSEO, SEOPress, or Slim SEO if available; falls back to the WooCommerce short description otherwise
+* **Non-destructive take-over of an existing `/llms.txt`** — any existing file is backed up to `wp-content/uploads/lltxt-backups/` first. Restore your version any time from the Files tab; the backup is preserved on uninstall.
 
-= Built by the team behind Agentic Commerce for WooCommerce =
+= About =
 
-We build AI-shopping infrastructure for WooCommerce stores. We see, every day, which catalogs AI shoppers pick up and which they skip. We built this so any WooCommerce store — yours included — gets the same treatment for free.
-
-**Open source.** Read the code, file an issue, send a PR: [github.com/xpaysh/llms-txt-for-woocommerce](https://github.com/xpaysh/llms-txt-for-woocommerce)
-
-**You can't win the race if you don't show up.**
+Built by the team behind *Agentic Commerce for WooCommerce*. Open source: [github.com/xpaysh/agentic-commerce-llms-txt](https://github.com/xpaysh/agentic-commerce-llms-txt)
 
 == External services ==
 
-The plugin sends a small install ping to xpay.sh on activation and once a week so we can track how many sites are using it: your site URL, your slug, your WordPress / WooCommerce / plugin versions, and your active product count. Toggle off in **Settings → LLMs.txt → Privacy**.
+This plugin can communicate with the xpay.sh install-tracking endpoint, but every request is **off by default** and only happens after you explicitly enable the install ping under **Settings → Agentic Commerce → Privacy**. No personal data, no product data, and no order data are ever transmitted.
+
+What is sent (only when you have opted in): your site URL, a derived slug, your WordPress / WooCommerce / plugin versions, and your active product count.
+
+When a request can occur (each only when the toggle is ON):
+
+* **On opt-in** — a single POST so the backend recognises this site
+* **Weekly heartbeat** — one POST per week via WP-Cron
+* **On plugin deactivation** — one POST marking the install dormant
+* **On plugin uninstall** — one POST marking the install removed
+* **When you click "Delete my install info"** — one POST asking the backend to delete this install's row
+
+What is **never** sent: product titles, prices, images, SKUs, descriptions, customer or order data of any kind, and no data at all if you have not enabled the toggle.
 
 **Endpoint:** `https://llmstxt-api.xpay.sh/v1/llms-txt/installs`
-**Privacy policy:** https://xpay.sh/privacy
+**Privacy policy:** https://www.xpay.sh/legal/privacy-policy/
 
 == Installation ==
 
 1. Install from **Plugins → Add New** in your WordPress admin, or upload the ZIP at **Plugins → Add New → Upload Plugin**.
-2. Activate.
-3. Visit `https://yourstore.com/llms.txt` — your products are live.
+2. Activate. WooCommerce must be active.
+3. Visit `https://yourstore.com/llms.txt` to see your generated file.
 
-That's it. Settings live at **Settings → LLMs.txt** if you want to tune which products are featured.
+Settings live at **Settings → Agentic Commerce** if you want to tune which products are featured.
 
 == Frequently Asked Questions ==
 
-= Will this actually get my products into ChatGPT? =
+= What is /llms.txt? =
 
-`/llms.txt` is the file AI shopping agents look for when they want to recommend products. Without one, you're invisible to them. With one — and especially a commerce-aware one — you join the answer set. The rest is up to your product quality, your prices and the AI's match logic, but at least you're in the running. You can't win the race if you don't show up.
+`/llms.txt` is an emerging convention for a machine-readable summary file at the root of a website that AI assistants can fetch to understand what the site offers. For commerce sites, this means a structured list of products, prices, images, and stock.
 
 = I already have a /llms.txt — what happens to it? =
 
-Your file is preserved. On activation we save your original to a timestamped backup inside your WordPress uploads folder, then take over `/llms.txt` so your products are immediately AI-ready. **Restore your original any time** with one click from the Files tab → *Restore my version*. The backup is never deleted, even on plugin uninstall — your file is yours.
+Your file is preserved. On activation, the plugin saves your original to a timestamped backup inside your WordPress uploads folder, then takes over `/llms.txt` so the generated catalog is served. **Restore your original any time** with one click from the Files tab → *Restore my version*. The backup is never deleted, even on plugin uninstall.
 
 = Does it slow my store down? =
 
-No. Files are generated by a background job (daily, or whenever you click Regenerate), stored as plain static files in your webroot, and served by your web server — not by WordPress on every request. Storefront speed is untouched.
+No. Files are generated by a background job (daily, or whenever you click Regenerate), stored as plain static files in your webroot, and served by your web server — not by WordPress on every request.
 
 = Does it work with WP Engine / Flywheel / hardened hosts? =
 
-Yes. The plugin tries multiple write strategies so it works on WP Engine, Flywheel, WP VIP and most managed hosts where direct file access is restricted. If a file can't be written, you'll see the error and a fix in the Diagnostics tab.
+Yes. The plugin tries multiple write strategies so it works on WP Engine, Flywheel, WP VIP, and most managed hosts where direct file access is restricted. If a file can't be written, you'll see the error and a fix in the Diagnostics tab.
 
 = Does it work with my SEO plugin? =
 
-Yes. The plugin reads your existing product meta descriptions from Yoast SEO, Rank Math, AIOSEO, SEOPress or Slim SEO — whichever you have. Nothing in your SEO plugin's setup needs to change.
+Yes. The plugin reads your existing product meta descriptions from Yoast SEO, Rank Math, AIOSEO, SEOPress, or Slim SEO — whichever you have. Nothing in your SEO plugin's setup needs to change.
 
-= I want to keep one specific product out of /llms.txt. How? =
+= How do I keep one specific product out of /llms.txt? =
 
 Edit the product. In the right-hand sidebar there's an *LLMs.txt for AI Shoppers* box with an *Exclude this product* checkbox. Tick it, save, done. The next refresh will drop it.
 
-= How is this different from other llms.txt plugins? =
+= Is it really free? =
 
-Every other llms.txt plugin on the wp.org repository walks your **blog posts and pages**. This one walks your **WooCommerce catalog** — products, prices, stock, images, variations. AI shopping agents need product data to recommend products. That's the whole point.
-
-= Is it really free forever? =
-
-Yes. No paid tier, no premium upsell, no "pro version" lurking in the admin.
+Yes. No paid tier, no premium upsell, no "pro version" in the admin.
 
 = Does this send my data anywhere? =
 
-Just one small ping on activation and weekly: your URL, your WordPress / WooCommerce / plugin versions, and your product count. Toggle off in **Settings → LLMs.txt → Privacy**. Your `/llms.txt` versions are stored only in your own WordPress database.
+By default, no. The plugin includes an optional install ping (your URL, your WordPress / WooCommerce / plugin versions, and your product count) that is **OFF by default**. You can opt in under **Settings → Agentic Commerce → Privacy**, and when enabled it runs on activation and weekly. Your generated `/llms.txt` versions are stored only in your own WordPress database; no product or order data ever leaves your site.
 
 == Screenshots ==
 
@@ -118,4 +119,4 @@ Just one small ping on activation and weekly: your URL, your WordPress / WooComm
 == Upgrade Notice ==
 
 = 1.0.0 =
-Install and your products are in front of ChatGPT, Claude and Perplexity in 30 seconds.
+Commerce-aware /llms.txt and /llms-full.txt for your WooCommerce store.

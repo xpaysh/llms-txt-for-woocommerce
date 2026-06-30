@@ -476,7 +476,7 @@ class Lltxt_Catalog_Reader {
 		}
 		if ( 'variable' === $row['type'] && '' !== $row['price_max'] && (float) $row['price_max'] > (float) $row['price'] ) {
 			/* translators: %s: lowest price in a variable-product range. */
-			return sprintf( __( 'from %s', 'llms-txt-for-woocommerce' ), $price );
+			return sprintf( __( 'from %s', 'agentic-commerce-llms-txt' ), $price );
 		}
 		return $price;
 	}
