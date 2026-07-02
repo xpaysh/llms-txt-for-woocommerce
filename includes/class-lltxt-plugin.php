@@ -97,6 +97,7 @@ final class Lltxt_Plugin {
 		// Admin.
 		if ( is_admin() ) {
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-admin-page.php';
+			require_once LLTXT_DIR . 'includes/admin/class-lltxt-ai-commerce-tab.php';
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-files-tab.php';
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-catalog-tab.php';
 			require_once LLTXT_DIR . 'includes/admin/class-lltxt-version-control-tab.php';
@@ -196,6 +197,12 @@ final class Lltxt_Plugin {
 				)
 			);
 		}
+
+		// Flag a one-time redirect to the AI Commerce screen on the next admin
+		// load. The redirect itself (and its bulk-activation guard) lives in
+		// Lltxt_Admin_Page::maybe_activation_redirect() — we cannot safely
+		// redirect from inside the activation request.
+		set_transient( 'lltxt_activation_redirect', 1, 30 );
 
 		// Install ping is opt-in. We do not seed OPT_ENABLED, do not generate
 		// an api_key, and do not fire any ping on activation. Both happen

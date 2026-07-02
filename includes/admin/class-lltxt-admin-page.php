@@ -26,6 +26,7 @@ class Lltxt_Admin_Page {
 	 */
 	public static function tabs() {
 		return array(
+			'ai-commerce'     => array( 'AI Commerce', 'Lltxt_Ai_Commerce_Tab' ),
 			'files'           => array( 'Files', 'Lltxt_Files_Tab' ),
 			'catalog'         => array( 'Catalog', 'Lltxt_Catalog_Tab' ),
 			'version-control' => array( 'Version Control', 'Lltxt_Version_Control_Tab' ),
@@ -41,8 +42,31 @@ class Lltxt_Admin_Page {
 	 */
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
+		add_action( 'admin_init', array( __CLASS__, 'maybe_activation_redirect' ) );
 		add_action( 'admin_init', array( __CLASS__, 'handle_actions' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_assets' ) );
 		add_filter( 'plugin_action_links_' . LLTXT_BASENAME, array( __CLASS__, 'action_links' ) );
+	}
+
+	/**
+	 * Enqueue the AI Commerce tab stylesheet — ONLY on that screen/tab.
+	 *
+	 * @param string $hook Current admin page hook suffix.
+	 * @return void
+	 */
+	public static function enqueue_assets( $hook ) {
+		if ( 'settings_page_' . self::SLUG !== $hook ) {
+			return;
+		}
+		if ( 'ai-commerce' !== self::current_tab() ) {
+			return;
+		}
+		wp_enqueue_style(
+			'lltxt-ai-commerce',
+			LLTXT_URL . 'assets/css/ai-commerce.css',
+			array( 'dashicons' ),
+			LLTXT_VERSION
+		);
 	}
 
 	/**
@@ -51,15 +75,44 @@ class Lltxt_Admin_Page {
 	 * @return void
 	 */
 	public static function menu() {
-		// Use the full "Agentic Commerce – LLMs.txt for WooCommerce" label so the Settings submenu
-		// stays distinguishable if a generic LLMs.txt plugin is also active.
+		// Page title stays the full descriptive name (shown as the page heading);
+		// the Settings submenu label is kept short so it doesn't wrap in the sidebar
+		// and doesn't get confused with the flagship "xpay Agentic Commerce" entry.
 		add_options_page(
 			__( 'Agentic Commerce – LLMs.txt for WooCommerce', 'agentic-commerce-llms-txt' ),
-			__( 'Agentic Commerce – LLMs.txt for WooCommerce', 'agentic-commerce-llms-txt' ),
+			__( 'WooCommerce LLMs.txt', 'agentic-commerce-llms-txt' ),
 			'manage_options',
 			self::SLUG,
 			array( __CLASS__, 'render' )
 		);
+	}
+
+	/**
+	 * One-time redirect to the AI Commerce screen right after activation.
+	 *
+	 * Fires only when the activation transient is set, and NEVER on bulk
+	 * activation (`activate-multi`) — hijacking a bulk activate is the pattern
+	 * reviewers/community object to. Also bails on AJAX, network admin, and for
+	 * users who cannot manage the page. Runs at most once (transient deleted).
+	 *
+	 * @return void
+	 */
+	public static function maybe_activation_redirect() {
+		if ( ! get_transient( 'lltxt_activation_redirect' ) ) {
+			return;
+		}
+		delete_transient( 'lltxt_activation_redirect' );
+
+		// Do not steal the redirect during bulk plugin activation. This only reads
+		// the presence of a core-set query flag (no form data, no nonce to verify).
+		if ( isset( $_GET['activate-multi'] ) || wp_doing_ajax() || is_network_admin() ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return;
+		}
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		wp_safe_redirect( admin_url( 'options-general.php?page=' . self::SLUG . '&tab=ai-commerce' ) );
+		exit;
 	}
 
 	/**
@@ -81,9 +134,9 @@ class Lltxt_Admin_Page {
 	 * @return string
 	 */
 	public static function current_tab() {
-		$tab  = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'files'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$tab  = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'ai-commerce'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$tabs = self::tabs();
-		return isset( $tabs[ $tab ] ) ? $tab : 'files';
+		return isset( $tabs[ $tab ] ) ? $tab : 'ai-commerce';
 	}
 
 	/**

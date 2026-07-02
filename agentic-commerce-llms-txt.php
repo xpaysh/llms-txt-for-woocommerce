@@ -3,7 +3,7 @@
  * Plugin Name:       Agentic Commerce – LLMs.txt for WooCommerce
  * Plugin URI:        https://github.com/xpaysh/agentic-commerce-llms-txt
  * Description:       Generates /llms.txt and /llms-full.txt from your live WooCommerce catalog so AI shopping agents can read your products, prices, and stock.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            xpaysh
  * Author URI:        https://www.xpay.sh/agentic-commerce/
  * License:           GPLv2 or later
@@ -24,7 +24,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'LLTXT_VERSION', '1.0.0' );
+define( 'LLTXT_VERSION', '1.1.0' );
 define( 'LLTXT_FILE', __FILE__ );
 define( 'LLTXT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'LLTXT_URL', plugin_dir_url( __FILE__ ) );

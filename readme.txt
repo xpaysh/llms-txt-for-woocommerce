@@ -5,7 +5,7 @@ Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
 Requires Plugins: woocommerce
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,11 +112,18 @@ By default, no. The plugin includes an optional install ping (your URL, your Wor
 
 == Changelog ==
 
+= 1.1.0 =
+* New AI Commerce dashboard home: one-glance file status, a live AI Playground preview of your store, and a one-click Agent-Readiness audit.
+* Native card layout on the plugin home screen; existing tabs and file generation are unchanged.
+
 = 1.0.0 =
 * Commerce-aware `/llms.txt` and `/llms-full.txt` generation for WooCommerce — daily auto-refresh, per-product exclusion, SEO-plugin description fallback, managed-host compatibility.
 * Version Control with one-click restore and pin; non-destructive take-over of any existing `/llms.txt`.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Adds the AI Commerce dashboard: a live AI Playground preview of your store and a one-click Agent-Readiness audit.
 
 = 1.0.0 =
 Commerce-aware /llms.txt and /llms-full.txt for your WooCommerce store.
