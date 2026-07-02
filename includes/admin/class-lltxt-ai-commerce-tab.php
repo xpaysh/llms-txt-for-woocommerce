@@ -228,10 +228,7 @@ class Lltxt_Ai_Commerce_Tab {
 				<section class="ac-card ac-7">
 					<h2 class="ac-h"><?php esc_html_e( 'See which AI agents visit your store', 'agentic-commerce-llms-txt' ); ?></h2>
 					<p class="ac-muted" style="margin:2px 0 10px">
-						<?php esc_html_e( 'A live Bot-Traffic view shows AI assistants — ChatGPT, Claude, Gemini and more — as they hit your store two ways: live shopper fetches (a person asking an AI about your products right now) and indexing crawls (building your future AI visibility), plus which products agents explored.', 'agentic-commerce-llms-txt' ); ?>
-					</p>
-					<p class="ac-muted" style="margin:0 0 10px">
-						<?php esc_html_e( 'This lightweight plugin makes your store agent-readable; capturing that live traffic is done by our main Agentic Commerce for WooCommerce plugin. See a sample and connect your store:', 'agentic-commerce-llms-txt' ); ?>
+						<?php esc_html_e( 'See when ChatGPT, Claude, Gemini and other AI assistants visit your store and explore your products. Live tracking is powered by our main Agentic Commerce for WooCommerce plugin — view a sample and connect your store.', 'agentic-commerce-llms-txt' ); ?>
 					</p>
 					<a class="button button-primary" href="<?php echo esc_url( $bot_url ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'See Bot Traffic & connect', 'agentic-commerce-llms-txt' ); ?> <span class="ac-ext">&#8599;</span></a>
 				</section>

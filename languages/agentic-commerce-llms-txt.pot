@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-02T13:22:17+00:00\n"
+"POT-Creation-Date: 2026-07-02T13:24:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: agentic-commerce-llms-txt\n"
@@ -145,75 +145,71 @@ msgid "See which AI agents visit your store"
 msgstr ""
 
 #: includes/admin/class-lltxt-ai-commerce-tab.php:231
-msgid "A live Bot-Traffic view shows AI assistants — ChatGPT, Claude, Gemini and more — as they hit your store two ways: live shopper fetches (a person asking an AI about your products right now) and indexing crawls (building your future AI visibility), plus which products agents explored."
+msgid "See when ChatGPT, Claude, Gemini and other AI assistants visit your store and explore your products. Live tracking is powered by our main Agentic Commerce for WooCommerce plugin — view a sample and connect your store."
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:234
-msgid "This lightweight plugin makes your store agent-readable; capturing that live traffic is done by our main Agentic Commerce for WooCommerce plugin. See a sample and connect your store:"
-msgstr ""
-
-#: includes/admin/class-lltxt-ai-commerce-tab.php:236
+#: includes/admin/class-lltxt-ai-commerce-tab.php:233
 msgid "See Bot Traffic & connect"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:241
+#: includes/admin/class-lltxt-ai-commerce-tab.php:238
 msgid "Ready for agent checkout?"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:242
+#: includes/admin/class-lltxt-ai-commerce-tab.php:239
 msgid "Your catalog is readable. The next step is letting agents buy — agent-ready cart & checkout."
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:243
+#: includes/admin/class-lltxt-ai-commerce-tab.php:240
 msgid "Unlock agent checkouts"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:251
+#: includes/admin/class-lltxt-ai-commerce-tab.php:248
 msgid "Files"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:251
+#: includes/admin/class-lltxt-ai-commerce-tab.php:248
 msgid "Preview & restore"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:252
+#: includes/admin/class-lltxt-ai-commerce-tab.php:249
 msgid "Catalog"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:252
+#: includes/admin/class-lltxt-ai-commerce-tab.php:249
 msgid "Categories & limits"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:253
+#: includes/admin/class-lltxt-ai-commerce-tab.php:250
 msgid "Diagnostics"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:253
+#: includes/admin/class-lltxt-ai-commerce-tab.php:250
 #: includes/admin/class-lltxt-diagnostics-tab.php:82
 msgid "Refresh log"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:254
+#: includes/admin/class-lltxt-ai-commerce-tab.php:251
 msgid "Version Control"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:254
+#: includes/admin/class-lltxt-ai-commerce-tab.php:251
 msgid "History & pin"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:255
+#: includes/admin/class-lltxt-ai-commerce-tab.php:252
 msgid "Privacy"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:255
+#: includes/admin/class-lltxt-ai-commerce-tab.php:252
 msgid "Data & consent"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:270
+#: includes/admin/class-lltxt-ai-commerce-tab.php:267
 msgid "by"
 msgstr ""
 
-#: includes/admin/class-lltxt-ai-commerce-tab.php:272
+#: includes/admin/class-lltxt-ai-commerce-tab.php:269
 msgid "Agentic Commerce for WooCommerce"
 msgstr ""
 
